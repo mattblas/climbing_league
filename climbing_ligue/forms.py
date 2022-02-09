@@ -1,41 +1,54 @@
-from dataclasses import field
 from django import forms
-from django import forms
-from django.forms import ChoiceField, ModelForm
+from django.forms import ModelForm
 from climbing_ligue.models import Route, User_routes, Active_edition
-from members.models import Member
-from django.utils.translation import gettext_lazy as _
+from django.db import connection
+
 
 # FORMULARZ AKTUALIZACJI EDYCJI
-#--------------------------------------------------------------
+# --------------------------------------------------------------
 class UpdateEdition(ModelForm):
     class Meta:
         model = Active_edition
         fields = '__all__'
-#--------------------------------------------------------------
+
+
+# --------------------------------------------------------------
 
 # FORMULARZ NOWEJ DROGI UŻYTKOWNIKA
-#--------------------------------------------------------------
+# --------------------------------------------------------------
+
+
+def table_exists(table_name):
+    all_tables = connection.introspection.table_names()
+    if table_name in all_tables:
+        return True
+    else:
+        return False
+
+
 def get_current_edition():
-    current_edition = Active_edition.objects.filter(current_edition=True).values_list('edition', flat=True)
-    for current_edition_value in current_edition:
-        current_edition_value = current_edition_value
-    return current_edition_value
+    if table_exists('climbing_ligue_active_edition'):
+        current_edition = list(Active_edition.objects.filter(current_edition=True).values_list('edition', flat=True))
+        if current_edition:
+            return current_edition[0]
+        else:
+            return None
+    else:
+        return None
+
 
 class AddUserRouteForm(ModelForm):
-
     user_routes = forms.ModelChoiceField(queryset=Route.objects.all().filter(edition=get_current_edition()))
-    
+
     class Meta:
         model = User_routes
-        fields = ('user_routes',)
+        fields = ['user_routes']
 
 
-
-#--------------------------------------------------------------
+# --------------------------------------------------------------
 
 # FORMULARZ DLA NOWEJ DROGI
-#--------------------------------------------------------------
+# --------------------------------------------------------------
 class AddRouteForm(ModelForm):
     route_grade_choices = (
         ('4A', '4A'),
@@ -61,7 +74,7 @@ class AddRouteForm(ModelForm):
         ('8B', '8B'),
         ('8B+', '8B+'),
         ('8C', '8C'),
-    ) 
+    )
 
     points_choices = (
         (0.5, '0,5'),
@@ -111,4 +124,4 @@ class AddRouteForm(ModelForm):
     class Meta:
         model = Route
         fields = ('route_name', 'route_grade', 'points', 'edition', 'round', 'route_group')
-#--------------------------------------------------------------
+# --------------------------------------------------------------
