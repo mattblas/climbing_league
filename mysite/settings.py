@@ -38,8 +38,8 @@ ALLOWED_HOSTS = ['https://climbing-ligue.herokuapp.com/']
 INSTALLED_APPS = [
 
 # my apps
-    'members',
-    'climbing_ligue',
+    'members.apps.MembersConfig',
+    'climbing_ligue.apps.ClimbingLigueConfig',
     
 # django apps
     'django.contrib.admin',
