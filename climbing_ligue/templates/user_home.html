@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="p-3 mb-2 text-warning">
+<h1>{{ request.user.username|title }}</h1>
+</div>
+<br><br>
+
+{% comment %} numer aktualnej edycji {% endcomment %}
+{% comment %} OK OK OK OK OK OK OK OK OK OK OK OK OK OK OK {% endcomment %}
+Aktualna edycja zawodów: {{ current_edition_value }}<hr>
+Aktualne punkty: {{ current_points }}<hr><br>
+
+
+
+{% comment %} LISTA DRÓG UŻYTKOWNIKA W NAJNOWSZEJ EDYCJI {% endcomment %}
+
+Lista dróg użytkownika w bieżącej edycji:<br>
+
+<table table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Nazwa</th>
+      <th scope="col">Edycja</th>
+      <th scope="col">Runda</th>
+      <th scope="col">Trudność</th>
+      <th scope="col">Punktacja</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for route in filter %}
+      {% if route.user_routes.edition == current_edition_value %}  
+        <tr>
+          <td>{{ route.user_routes }}</td>
+          <td>{{ route.user_routes.edition }}</td>
+          <td>{{ route.user_routes.round }}</td>
+          <td>{{ route.user_routes.route_grade }}</td>
+          <td>{{ route.user_routes.points }}</td>
+        </tr>
+      {% endif %}
+    {% endfor %}
+  </tbody>
+</table>
+
+<hr><br><br><br>
+
+
+
+{% comment %} LISTA WSZYSTKICH DRÓG UŻYTKOWNIKA{% endcomment %}
+
+Lista wszystkich dróg użytkownika:<br>
+
+<table table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Nazwa</th>
+        <th scope="col">Edycja</th>
+        <th scope="col">Runda</th>
+        <th scope="col">Trudność</th>
+        <th scope="col">Punktacja</th>
+    </tr>
+    </thead>
+    <tbody>
+      {% for route in filter %}
+      <tr>
+            <td>{{ route.user_routes }}</td>
+            <td>{{ route.user_routes.edition }}</td>
+            <td>{{ route.user_routes.round }}</td>
+            <td>{{ route.user_routes.route_grade }}</td>
+            <td>{{ route.user_routes.points }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+<br><br><br>
+
+{% endblock %}

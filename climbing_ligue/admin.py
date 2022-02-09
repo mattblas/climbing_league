@@ -1,0 +1,24 @@
+from django.contrib import admin
+from climbing_ligue.models import Route, User_routes, Active_edition
+
+# Register your models here.
+
+# @admin.register(Edition)
+# class EditionAdmin(admin.ModelAdmin):
+#     ordering = ('edition_number',)
+#     list_display = ('edition_number',)
+#     search_fields = ('edition_number',)
+
+@admin.register(Route)
+class RouteAdmin(admin.ModelAdmin):
+    list_display = ('route_name', 'route_grade', 'points', 'edition', 'round', 'route_group', 'add_date',)
+    search_fields = ('route_name', 'edition',)
+
+@admin.register(User_routes)
+class User_routesAdmin(admin.ModelAdmin):
+    list_display = ('user_name', 'user_routes', 'date_created')
+    search_fields = ('user_name',)
+
+@admin.register(Active_edition)
+class Active_editionAdmin(admin.ModelAdmin):
+    list_display = ('edition', 'current_edition',)

@@ -1,0 +1,57 @@
+SHIT TO DO:
+    - boostrapnąć templetki
+
+
+BACKUPS:
+
+    009
+    - add_user_route_viev, html, path
+    - bootstrapnieta templetka 'home'
+    - dodany link do 'navbar'
+    - poprawiony 'navbar' dla routesettera
+    - update_edition_viev, html, path 
+
+    008
+    - user_home: .html , view , path , navbarlink
+    - update page_base.html
+    - update navbar
+    - test.view lista wyników
+
+    007
+    - nowy model user_routes
+    
+    006
+    - bootstrap add_route.html
+    - register.view login fix
+    - massages do register, login i add_route
+    - zabezpieczone strony przed dostępem niezalogowanych użytkowników
+    - optymalizacja dla mobile
+
+    005
+    - add_route.html - add table
+    - add_route_view - add ordering ...
+
+    004
+    - Model.Route
+    - view add_route_view, add_route.html, add_routeForm
+
+    003
+    - register_view
+    - register form
+    - register.html
+    - consent field
+    - choice field
+    - login
+    - logout
+    - add_route.html & view
+
+    002
+    - start app climbing_ligue
+    - create templates/ base.html
+    - create home.html
+    - create navbar.html
+
+    001
+    - model Member
+    - model MyMemberManager
+    - Class MemberAdmin in Admin.py

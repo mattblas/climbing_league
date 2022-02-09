@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="p-3 mb-2 text-warning">
+<h1>Limbo Kilter Liga</h1>
+</div>
+<br><br>
+
+<!-- --------------------------------------------------------------------------------------- -->
+<!--  STREFA ZALOGOWANYCH UŻYTKOWNIKÓW------------------------------------------------------ -->
+<!-- --------------------------------------------------------------------------------------- -->
+
+    {% if request.user.is_authenticated %}
+    <h1 class="display-6" align="right">Cześć, {{ request.user.username|title }}</h1>
+    <p align="right"><a href="{% url 'add_user_route' %}" class="btn btn-secondary" align="right" role="button">Dodaj drogę</a>
+  
+        <br><br><br>
+
+<!--  TABELA WYNIKÓW ------------------------------ ---------------------------------------- -->
+    <h1 class="display-6" align="center">- TABELA WYNIKÓW - </h1>
+            
+    <figure>
+        <blockquote class="blockquote" align="center">
+            <p>- Kategoria Open - </p> 
+            <P><h6>>>> ZMIENIĆ ŻEBY POKAZYWAŁO KATEGORIĘ UŻYTKOWNIKA <<<</h6></P>
+            <P><h6>>>> ZMIENIĆ ŻEBY WYRÓŻNIAŁO WIERSZ ZAWODNIKA <<<</h6></P>
+        </blockquote>
+    <figure>
+
+    <table table class="table table-striped">
+
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Użytkownik</th>
+            <th scope="col">Wynik</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for k, v in sorted_points %}
+            <tr>
+                <td>{{ forloop.counter }}</th>
+                <td>{{ k }}</td>
+                <td>{{ v }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+    <hr><br><br><br>
+
+- DODAJ POKONANĄ DROGĘ - <br>
+- TABELA AKTUALNYCH WYNIKÓW, DLA AKTUALNEJ EDYCJI. -
+    
+
+
+<!--  WARUNKOWANIE DLA NIEZALOGOWANYCH UŻYTKOWNIKÓW ---------------------------------------- -->
+    {% else %}
+    <h1 class="display-6" align="right">Cześć, zaloguj się</h1>
+        <a class="nav-link" align="right" href="{% url 'login' %}">Login</a><p>
+        <a class="nav-link" align="right" href="{% url 'register' %}">Rejestracja</a>
+
+    <br><br><br>
+
+<!--  TABELA WYNIKÓW ------------------------------ ---------------------------------------- -->
+        <h1 class="display-6" align="center">- Tabela wyników - </h1>
+        
+        <figure>
+            <blockquote class="blockquote" align="center">
+                <p>- Kategoria Open - </p>
+            </blockquote>
+        <figure>
+
+        <table table class="table table-striped">
+        
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Użytkownik</th>
+                    <th scope="col">Wynik</th>
+                </tr>
+            </thead>
+        
+            <tbody>
+                {% for k, v in sorted_points %}
+                <tr>
+                    <td>{{ forloop.counter }}</th>
+                    <td>{{ k }}</td>
+                    <td>{{ v }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+
+        <hr><br><br><br>
+    {% endif %}
+{% endblock %}

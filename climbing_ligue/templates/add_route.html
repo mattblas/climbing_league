@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if request.user.is_staff %}
+
+<div class="p-3 mb-2 text-warning">
+<h1>Dodaj Drogę</h1>
+</div>
+<br><br>
+
+<!--BOOTSTRAP FORM TEST-->
+
+<form method="POST">{% csrf_token %}
+
+    <div class="mb-3">
+        <input class="form-control" 
+        name="route_name" 
+        type="text" 
+        placeholder="Nazwa drogi" aria-label="default input example">
+    </div>
+
+    <div class="mb-3">
+        <label for="exampleInput" class="form-label">Wycena</label>
+            <select class="form-select" 
+            placeholder="Wycena" 
+            name="route_grade" 
+            aria-label="Default select example">
+                <option value="4A">4A</option>
+                <option value="4B">4B</option>
+                <option value="4C">4C</option>
+                <option value="5A">5A</option>
+                <option value="5B">5B</option>
+                <option value="5C">5C</option>
+                <option value="6A">6A</option>
+                <option value="6A+">6A+</option>
+                <option value="6B">6B</option>
+                <option value="6B+">6B+</option>
+                <option value="6C">6C</option>
+                <option value="6C+">6C+</option>
+                <option value="7A">7A</option>
+                <option value="7A+">7A+</option>
+                <option value="7B">7B</option>
+                <option value="7B+">7B+</option>
+                <option value="7C">7C</option>
+                <option value="7C+">7C+</option>
+                <option value="8A">8A</option>
+                <option value="8A+">8A+</option>
+                <option value="8B">8B</option>
+                <option value="8B+">8B+</option>
+                <option value="8C">8C</option>
+            </select>
+    </div>
+
+    {% comment %} <div class="mb-3">
+        <input class="form-control" 
+        name="points" 
+        input type="number" step="0.5" min="1" max="15" 
+        placeholder="Punkty" aria-label="default input example">
+    </div> {% endcomment %}
+    
+    <div class="mb-3">
+        <label for="exampleInput" class="form-label">Punktacja</label>
+            <select class="form-select"
+            placeholder="Default input" 
+            name="points" 
+            aria-label="Default select example">
+                <option value="0.5">0,5</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="4.5">4,5</option>
+                <option value="5">5</option>
+                <option value="5.5">5,5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="8.5">8,5</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+            </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="exampleInput" class="form-label">Edycja</label>
+            <input class="form-control" 
+            name="edition"
+            type="number" min="1"
+            placeholder="Numer Edycji" aria-label="default input example">
+    </div>
+
+    <div class="mb-3">
+        <label for="exampleInput" class="form-label">Runda</label>
+            <select class="form-select" 
+            name="round" 
+            placeholder="Runda"
+            aria-label="Default select example">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="Final">Finał</option>
+            </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="exampleInput" class="form-label">Grupa</label>
+            <select class="form-select" name="route_group" aria-label="Default select example">
+                <option value="Poczatkujacy">Początkujący</option>
+                <option value="Sredniozaawansowani">Średniozaawansowani</option>
+                <option value="Pro">Pro</option>
+                <option value="Masters">Masters</option>
+            </select>
+    </div>
+
+    <input type="submit" value="Wyślij" class="btn btn-secondary btn-sm" >
+
+</form>
+<!--OLD FORM-->
+
+{% comment %} <form method="POST">
+    
+    {% csrf_token %}
+
+    {% for field in add_route_form %}
+        <p>
+            {{ field.label_tag }}<br>
+            {{ field }}
+
+            {% if field.help_text %}
+                {{ field.help_text }}
+            {% endif %}
+
+            {% for error in field.errors %}
+                {{ error }}
+            {% endfor %}
+        </p>
+    {% endfor %}
+
+    <input type="submit" value="Wyślij" class="btn btn-secondary btn-sm" >
+</form> {% endcomment %}
+
+<!--END OF OLD FORM -->
+
+<hr>
+<h3>Lista Dróg<h3>
+    <div class="table-responsive"> 
+    <table class="table table-striped">
+        <thead>
+        
+          <tr>
+            <th scope="col"><h5>id</h5></th>
+            <th scope="col"><h5>Nazwa drogi</h5></th>
+            <th scope="col"><h5>Trudność</h5></th>
+            <th scope="col"><h5>Punktacja</h5></th>
+            <th scope="col"><h5>Edycja</h5></th>
+            <th scope="col"><h5>Runda</h5></th>
+            <th scope="col"><h5>Grupa</h5></th>
+          </tr>
+        </h5>
+        </thead>
+            
+        <tbody>
+        <h6>
+            {% for route in route_list %}
+            <tr>
+            <th scope="row"><h6>{{ route.id }}</h6></th>
+            <td><h6>{{ route }}</h6></td>
+            <td><h6>{{ route.route_grade}}</h6></td>
+            <td><h6>{{ route.points}}</h6></td>
+            <td><h6>{{ route.edition}}</h6></td>
+            <td><h6>{{ route.round}}</h6></td>
+            <td><h6>{{ route.route_group}}</h6></td>
+            </tr>
+            {% endfor %}
+        </h6>
+        </tbody>
+      </table>
+    </div>
+
+{% else %}
+
+<h1>Nie masz uprawnień dostępu do tej strony.</h1>
+<h3>Zaloguj się z odpowiednimi uprawnieniami.</h3>
+<h3><a class="nav-link" href="{% url 'login' %}">Login</a></h3>
+{% endif %}
+{% endblock %}

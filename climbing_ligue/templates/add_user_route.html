@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+{% block content %}
+<div class="p-3 mb-2 text-warning">
+<h1>Dodaj nową drogę</h1>
+</div>
+
+<br><br><br>
+
+<form method="POST" class="post-form">{% csrf_token %}
+
+  <p>{% render_field form.user_routes class="form-select" %}</p>
+
+  <p align="right"><button type="submit" class="btn btn-secondary">Dodaj</button></p>
+</form>
+
+
+{% comment %} <form method="POST">{% csrf_token %}
+  <div class="visible">
+    <select class="form-select" aria-label="Default select example" name="user_name">
+      {% for member in all_users_filter %}
+        <option value="{{member.username}}">{{member.username}}</option>
+      {% endfor %}
+    </select>  
+    
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Lista dostępnych dróg</label>
+      <select class="form-select" aria-label="Default select example" name="user_routes">
+        <option selected>Wybierz drogę do dodania</option>
+          {% for route in all_routes_filter %}
+            <option value="{{route.route_name}}">{{route.route_name}}</option>
+          {% endfor %}
+      </select>  
+    
+  </div>
+
+  <p align="right"><button type="submit" class="btn btn-secondary">Dodaj</button></p>
+    
+ </form> {% endcomment %}
+
+{% endblock %}
