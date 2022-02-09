@@ -1,0 +1,1 @@
+web: gunicorn climbing_ligue.wsgi --log-file -

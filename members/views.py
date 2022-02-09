@@ -37,6 +37,7 @@ def logout_view(request):
     messages.success(request, ('Udało się wylogować!'))
     return redirect('home')
 
+
 def registration_view(request):
     context = {}
     if request.POST:
