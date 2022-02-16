@@ -23,8 +23,13 @@ class Route(models.Model):
     def __str__(self):
         return self.route_name
 
+
 # ----- MODEL POKONANYCH DRÓG UŻYTKOWNIKA -----
 class User_routes(models.Model):
+    objects = None
     user_name = models.ForeignKey(Member, verbose_name=("User"), on_delete=models.SET_NULL, null=True)
     user_routes = models.ForeignKey(Route, verbose_name=("Routes"), on_delete=models.SET_NULL, null=True)
     date_created = models.DateTimeField(auto_now=True, null=True)
+
+
+
