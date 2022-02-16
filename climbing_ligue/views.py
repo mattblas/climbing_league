@@ -3,7 +3,7 @@ import operator
 from django.contrib import messages
 from django.shortcuts import render, redirect
 
-from climbing_ligue.forms import AddRouteForm, AddUserRouteForm
+from climbing_ligue.forms import AddRouteForm, AddUserRouteForm, UserGroupForm
 from climbing_ligue.models import Route, User_routes, Active_edition
 from members.models import Member
 
@@ -16,19 +16,31 @@ from members.models import Member
 
 def test(request):
     if request.POST:
-        form = AddUserRouteForm(request.POST)
+        form = UserGroupForm(request.POST)
         if form.is_valid():
-            u = User_routes.objects.create(
-                user_name=request.user,
-                user_routes=form.cleaned_data['user_routes']
-            )
+            form.save()
             messages.success(request, ('Udało się dodać nową drogę!'))
             return redirect('test')
         else:
             messages.success(request, ('Nie udało się dodać nowej drogi!'))
             return redirect('test')
     else:
-        form = AddUserRouteForm()
+        form = UserGroupForm()
+
+    # if request.POST:
+    #     form = AddUserRouteForm(request.POST)
+    #     if form.is_valid():
+    #         u = User_routes.objects.create(
+    #             user_name=request.user,
+    #             user_routes=form.cleaned_data['user_routes']
+    #         )
+    #         messages.success(request, ('Udało się dodać nową drogę!'))
+    #         return redirect('test')
+    #     else:
+    #         messages.success(request, ('Nie udało się dodać nowej drogi!'))
+    #         return redirect('test')
+    # else:
+    #     form = AddUserRouteForm()
 
     return render(request, 'test.html', {
         'form': form,

@@ -1,10 +1,27 @@
 from django import forms
 from django.forms import ModelForm
-from climbing_ligue.models import Route, User_routes, Active_edition
+from climbing_ligue.models import Route, User_routes, Active_edition, User_Group
 from django.db import connection
 
 
-# FORMULARZ AKTUALIZACJI EDYCJI
+# --- TO DO --- TO DO --- TO DO --- FORMULARZ AKTUALIZACJI GRUPY --- TO DO --- TO DO --- TO DO ---
+class UserGroupForm(ModelForm):
+
+    user_group_choices = (
+        ('Poczatkujacy', 'Początkujący'),
+        ('Sredniozaawansowani', 'Średniozaawansowani'),
+        ('Pro', 'Pro'),
+        ('Masters', 'Masters'),
+    )
+
+    user_group = forms.ChoiceField(choices=user_group_choices, required=True, label='Grupa')
+
+    class Meta:
+        model = User_Group
+        fields = ('user_name', 'edition', 'user_group')
+
+
+# --- TO DO --- TO DO --- TO DO --- FORMULARZ AKTUALIZACJI EDYCJI --- TO DO --- TO DO --- TO DO ---
 # --------------------------------------------------------------
 class UpdateEdition(ModelForm):
     class Meta:

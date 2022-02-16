@@ -1,5 +1,5 @@
 from django.contrib import admin
-from climbing_ligue.models import Route, User_routes, Active_edition
+from climbing_ligue.models import Route, User_routes, Active_edition, User_Group
 
 # Register your models here.
 
@@ -22,3 +22,7 @@ class User_routesAdmin(admin.ModelAdmin):
 @admin.register(Active_edition)
 class Active_editionAdmin(admin.ModelAdmin):
     list_display = ('edition', 'current_edition',)
+
+@admin.register(User_Group)
+class User_GroupAdmin(admin.ModelAdmin):
+    list_display = ('user_name', 'edition', 'user_group',)

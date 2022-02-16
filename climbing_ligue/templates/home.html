@@ -13,7 +13,7 @@
     {% if request.user.is_authenticated %}
     <h1 class="display-6" align="right">Cześć, {{ request.user.username|title }}</h1>
     <p align="right"><a href="{% url 'add_user_route' %}" class="btn btn-secondary" align="right" role="button">Dodaj drogę</a>
-  
+    <p align="right"><a href="{% url 'test' %}" class="btn btn-secondary" align="right" role="button">Test</a>
         <br><br><br>
 
 <!--  TABELA WYNIKÓW ------------------------------ ---------------------------------------- -->
