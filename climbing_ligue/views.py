@@ -15,8 +15,23 @@ from members.models import Member
 
 
 def test(request):
-    return render(request, 'test.html', {
+    if request.POST:
+        form = AddUserRouteForm(request.POST)
+        if form.is_valid():
+            u = User_routes.objects.create(
+                user_name=request.user,
+                user_routes=form.cleaned_data['user_routes']
+            )
+            messages.success(request, ('Udało się dodać nową drogę!'))
+            return redirect('test')
+        else:
+            messages.success(request, ('Nie udało się dodać nowej drogi!'))
+            return redirect('test')
+    else:
+        form = AddUserRouteForm()
 
+    return render(request, 'test.html', {
+        'form': form,
     })
 
 
@@ -135,7 +150,7 @@ def home(request):
 
     sorted_points = sorted(points_dict.items(), key=operator.itemgetter(1), reverse=True)
 
-    print(sorted_points)
+    # print(sorted_points)
 
     return render(request, 'home.html', {
         'sorted_points': sorted_points,

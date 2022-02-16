@@ -1,22 +1,20 @@
 {% extends 'base.html' %}
 
+{% load widget_tweaks %}
 {% block content %}
 <div class="p-3 mb-2 text-warning">
 <h1>Test Site</h1>
 </div>
 <br><br>
 
-<h3>Test Site<h3>
+<h3>Test Site</h3>
 <br><br><br>
-<h6>
-- kategorie użytkownika - <br><br><br>
-- płeć: .....<br>
-- kategoria: .....
 
+<form method="POST" class="post-form">{% csrf_token %}
 
-<hr><br><br><br>
+  <p>{% render_field form.user_routes class="form-select" %}</p>
 
+  <p align="right"><button type="submit" class="btn btn-secondary">Dodaj</button></p>
+</form>
 
-
-</h6>
 {% endblock %}
