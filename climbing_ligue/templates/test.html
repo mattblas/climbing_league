@@ -9,10 +9,13 @@
 
 <h3>Test Site</h3>
 <br><br><br>
+Aktualna edycja: {{ current_edition_value }}<br>
+User: {{ username }}<br>
+<form method="POST" class="post-form">{% csrf_token %}
 
-<form method="POST">{% csrf_token %}
-{{ form.as_p }}
-<p align="right"><button type="submit" class="btn btn-secondary">Dodaj</button></p>
+  <p>{% render_field form.user_group class="form-select" %}</p>
+
+  <p align="right"><button type="submit" class="btn btn-secondary">Dodaj</button></p>
 </form>
 <!--<form method="POST" class="post-form">{% csrf_token %}-->
 

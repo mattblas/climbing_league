@@ -18,7 +18,7 @@ class UserGroupForm(ModelForm):
 
     class Meta:
         model = User_Group
-        fields = ('user_name', 'edition', 'user_group')
+        fields = ['user_group']
 
 
 # --- TO DO --- TO DO --- TO DO --- FORMULARZ AKTUALIZACJI EDYCJI --- TO DO --- TO DO --- TO DO ---
