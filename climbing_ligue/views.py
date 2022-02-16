@@ -38,7 +38,6 @@ def test(request):
     return render(request, 'test.html', {
         'form': form,
         'current_edition_value':current_edition_value,
-        'username': username
     })
 
 
