@@ -10,9 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
-from json import load
 from pathlib import Path
+from dotenv import load_dotenv
 
+load_dotenv()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-3l5+i1z(a-y6+imeszb)6b4y(%8=^nn)**u^!90&mnrz&9n-^b'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = int(os.environ.get('DEBUG', default=0))
 
 ALLOWED_HOSTS = ['https://climbing-ligue.herokuapp.com/']
 

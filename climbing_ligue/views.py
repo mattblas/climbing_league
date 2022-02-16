@@ -1,9 +1,10 @@
-from email import message
-from django.shortcuts import render, redirect
-from climbing_ligue.forms import AddRouteForm, AddUserRouteForm, UpdateEdition
-from climbing_ligue.models import Route, User_routes, Active_edition
-from django.contrib import messages
 import operator
+
+from django.contrib import messages
+from django.shortcuts import render, redirect
+
+from climbing_ligue.forms import AddRouteForm, AddUserRouteForm
+from climbing_ligue.models import Route, User_routes, Active_edition
 from members.models import Member
 
 
