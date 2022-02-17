@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+{% block content %}
+<div class="p-3 mb-2 text-warning">
+<h1>Dodaj nową edycję</h1>
+</div>
+<br><br>
+
+<h3>Dodaj nową edycję</h3>
+<br><br><br>
+
+<form method="POST" class="post-form">{% csrf_token %}
+
+  <p>{% render_field form.edition class="form-select" %}</p>
+
+  <p align="right"><button type="submit" class="btn btn-secondary">Dodaj</button></p>
+</form>
+
+{% endblock %}

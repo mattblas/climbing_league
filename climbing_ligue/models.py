@@ -5,8 +5,8 @@ from members.models import Member
 # Create your models here.
 # ----- MODEL AKTYWNYCH EDYCJI -----
 class Active_edition(models.Model):
-    edition = models.IntegerField(verbose_name='Edycja')
-    current_edition = models.BooleanField(verbose_name='Bieżąca')
+    edition = models.IntegerField(verbose_name='Edycja', unique=True)
+    current_edition = models.BooleanField(verbose_name='Bieżąca', default=False)
 
 
 # ----- MODEL DRÓG WSPINACZKOWYCH -----

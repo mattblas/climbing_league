@@ -3,7 +3,7 @@ import operator
 from django.contrib import messages
 from django.shortcuts import render, redirect
 
-from climbing_ligue.forms import AddRouteForm, AddUserRouteForm, UserGroupForm
+from climbing_ligue.forms import AddRouteForm, AddUserRouteForm, UserGroupForm, NewEditionForm
 from climbing_ligue.models import Route, User_routes, Active_edition, User_Group
 from members.models import Member
 from django.db.models import Max
@@ -15,28 +15,41 @@ from django.db.models import Max
 
 
 def test(request):
-    edition_list = Active_edition.objects.all()
-    if request.method == "POST":
-        id_list = request.POST.getlist('boxes')
-        edition_list.update(current_edition=False)
-        for x in id_list:
-            Active_edition.objects.filter(pk=int(x)).update(current_edition=True)
-
-        messages.success(request, ('Udało się zaktualizować edycję!'))
-        return redirect('test')
 
     return render(request, 'test.html', {
-        'edition_list': edition_list
+
     })
 
 
 # -----------------------------------------------------------------------------------------
 
+def add_new_edition_view(request):
+    if request.POST:
+        form = NewEditionForm(request.POST)
+        if form.is_valid():
+            u = Active_edition.objects.create(
+                current_edition=False,
+                edition=form.cleaned_data['edition']
+            )
+            messages.success(request, ('Udało się dodać nową edycję!'))
+            return redirect('add_new_edition')
+        else:
+            messages.success(request, ('Nie udało się dodać nowej edycji!'))
+            return redirect('add_new_edition')
+    else:
+        form = NewEditionForm()
+
+    return render(request, 'add_new_edition.html', {
+        'form': form
+    })
+
+# -----------------------------------------------------------------------------------------
+
 
 def add_user_route_view(request):
-    current_edition = Active_edition.objects.filter(current_edition=True).values_list('edition', flat=True)
-    for current_edition_value in current_edition:
-        current_edition_value = current_edition_value
+    current_edition_filter = Active_edition.objects.filter(current_edition=True).values_list('edition', flat=True)
+    current_edition = list(current_edition_filter)
+    current_edition_value = current_edition[0]
 
     max_user_edition = User_Group.objects.aggregate(Max('edition'))
     max_user_edition_value = max_user_edition['edition__max']

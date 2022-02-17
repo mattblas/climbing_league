@@ -5,12 +5,15 @@ from django.db import connection
 
 
 
-# --- TO DO --- TO DO --- TO DO --- FORMULARZ AKTUALIZACJI EDYCJI --- TO DO --- TO DO --- TO DO ---
-# --------------------------------------------------------------
-class UpdateEdition(ModelForm):
+# --- TO DO --- TO DO --- TO DO --- FORMULARZ NOWEJ EDYCJI --- TO DO --- TO DO --- TO DO ---
+
+class NewEditionForm(ModelForm):
+    edition = forms.IntegerField(required=True, label='Edycja', min_value=1)
+
+
     class Meta:
         model = Active_edition
-        fields = '__all__'
+        fields = ['edition']
 
 
 

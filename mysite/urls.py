@@ -23,6 +23,7 @@ from climbing_ligue.views import (
     user_home,
     add_user_route_view,
     update_edition_view,
+    add_new_edition_view,
     )
 
 from members.views import(
@@ -42,4 +43,5 @@ urlpatterns = [
     path('user_home/', user_home, name='user_home'),
     path('add_user_route/', add_user_route_view, name='add_user_route'),
     path('update_edition/', update_edition_view, name='update_edition'),
+    path('add_new_edition/', add_new_edition_view, name='add_new_edition'),
 ]
