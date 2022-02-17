@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from climbing_ligue.forms import AddRouteForm, AddUserRouteForm, UserGroupForm
 from climbing_ligue.models import Route, User_routes, Active_edition, User_Group
 from members.models import Member
-
+from django.db.models import Max
 
 # Create your views here.
 
@@ -19,25 +19,45 @@ def test(request):
     for current_edition_value in current_edition:
         current_edition_value = current_edition_value
 
-    if request.POST:
-        form = UserGroupForm(request.POST)
-        if form.is_valid():
-            u = User_Group.objects.create(
-                user_name=request.user,
-                edition= current_edition_value,
-                user_group=form.cleaned_data['user_group']
+    max_user_edition = User_Group.objects.aggregate(Max('edition'))
+    max_user_edition_value = max_user_edition['edition__max']
+
+    if max_user_edition_value == current_edition_value:
+        if request.POST:
+            form = AddUserRouteForm(request.POST)
+            if form.is_valid():
+                u = User_routes.objects.create(
+                    user_name=request.user,
+                    user_routes=form.cleaned_data['user_routes']
                 )
-            messages.success(request, ('Udało się dodać nową drogę!'))
-            return redirect('test')
+                messages.success(request, ('Udało się dodać nową drogę!'))
+                return redirect('test')
+            else:
+                messages.success(request, ('Nie udało się dodać nowej drogi!'))
+                return redirect('test')
         else:
-            messages.success(request, ('Nie udało się dodać nowej drogi!'))
-            return redirect('test')
+            form = AddUserRouteForm()
     else:
-        form = UserGroupForm()
+        if request.POST:
+            form = UserGroupForm(request.POST)
+            if form.is_valid():
+                u = User_Group.objects.create(
+                    user_name=request.user,
+                    edition= current_edition_value,
+                    user_group=form.cleaned_data['user_group']
+                    )
+                messages.success(request, ('Udało się dodać nową drogę!'))
+                return redirect('test')
+            else:
+                messages.success(request, ('Nie udało się dodać nowej drogi!'))
+                return redirect('test')
+        else:
+            form = UserGroupForm()
 
     return render(request, 'test.html', {
         'form': form,
-        'current_edition_value':current_edition_value,
+        'current_edition_value': current_edition_value,
+        'max_user_edition_value': max_user_edition_value,
     })
 
 
