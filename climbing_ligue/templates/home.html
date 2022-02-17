@@ -72,13 +72,13 @@
                 <p>- Kategoria Open - </p>
             </blockquote>
         <figure>
-
-        <table table class="table table-striped">
+        <table table class="table table-striped table-hover table-bordered">
         
             <thead>
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Użytkownik</th>
+                    <th scope="col">Kategoria</th>
                     <th scope="col">Wynik</th>
                 </tr>
             </thead>
@@ -88,6 +88,15 @@
                 <tr>
                     <td>{{ forloop.counter }}</th>
                     <td>{{ k }}</td>
+                    <td>
+                        {% for user in user_group %}
+                            {% if user.user_name == k %}
+                                {% if user.edition == current_edition_value %}
+                                  {{ user.user_group }}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
                     <td>{{ v }}</td>
                 </tr>
                 {% endfor %}
@@ -95,6 +104,5 @@
 
         </table>
 
-        <hr><br><br><br>
     {% endif %}
 {% endblock %}

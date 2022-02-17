@@ -50,9 +50,15 @@ def add_user_route_view(request):
     current_edition_filter = Active_edition.objects.filter(current_edition=True).values_list('edition', flat=True)
     current_edition = list(current_edition_filter)
     current_edition_value = current_edition[0]
+    usergroups = User_Group.objects.filter(user_name = request.user)
 
-    max_user_edition = User_Group.objects.aggregate(Max('edition'))
+    max_user_edition = usergroups.aggregate(Max('edition'))
     max_user_edition_value = max_user_edition['edition__max']
+
+    if max_user_edition_value is not None:
+        max_user_edition_value = max_user_edition['edition__max']
+    else:
+        max_user_edition_value = 0
 
     if max_user_edition_value >= current_edition_value:
         if request.POST:
@@ -99,9 +105,9 @@ def add_user_route_view(request):
 def user_home(request):
     # ----- LISTA WSZYSTKICH DRÓG -------------------------------------------------------------
 
-    current_edition = Active_edition.objects.filter(current_edition=True).values_list('edition', flat=True)
-    for current_edition_value in current_edition:
-        current_edition_value = current_edition_value
+    current_edition_filter = Active_edition.objects.filter(current_edition=True).values_list('edition', flat=True)
+    current_edition = list(current_edition_filter)
+    current_edition_value = current_edition[0]
 
     all_route_list = Route.objects.all().order_by('-edition', 'round', 'points')
 
@@ -175,7 +181,10 @@ def add_route_view(request):
 def home(request):
     all_users = Member.objects.all()
     user_routes = User_routes.objects.all()
-
+    user_group = User_Group.objects.all()
+    current_edition_filter = Active_edition.objects.filter(current_edition=True).values_list('edition', flat=True)
+    current_edition = list(current_edition_filter)
+    current_edition_value = current_edition[0]
     username = request.user.username
 
     points_dict = {}
@@ -196,5 +205,8 @@ def home(request):
 
     return render(request, 'home.html', {
         'sorted_points': sorted_points,
-        'user': username
+        'user': username,
+        'all_users': all_users,
+        'user_group': user_group,
+        'current_edition_value': current_edition_value,
     })
