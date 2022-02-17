@@ -15,6 +15,15 @@ from django.db.models import Max
 
 
 def test(request):
+
+    return render(request, 'test.html', {
+    })
+
+
+# -----------------------------------------------------------------------------------------
+
+
+def add_user_route_view(request):
     current_edition = Active_edition.objects.filter(current_edition=True).values_list('edition', flat=True)
     for current_edition_value in current_edition:
         current_edition_value = current_edition_value
@@ -31,10 +40,10 @@ def test(request):
                     user_routes=form.cleaned_data['user_routes']
                 )
                 messages.success(request, ('Udało się dodać nową drogę!'))
-                return redirect('test')
+                return redirect('add_user_route')
             else:
                 messages.success(request, ('Nie udało się dodać nowej drogi!'))
-                return redirect('test')
+                return redirect('add_user_route')
         else:
             form = AddUserRouteForm()
     else:
@@ -43,45 +52,21 @@ def test(request):
             if form.is_valid():
                 u = User_Group.objects.create(
                     user_name=request.user,
-                    edition= current_edition_value,
+                    edition=current_edition_value,
                     user_group=form.cleaned_data['user_group']
                     )
-                messages.success(request, ('Udało się dodać nową drogę!'))
-                return redirect('test')
+                messages.success(request, ('Udało się aktualizować Twoją grupę!'))
+                return redirect('add_user_route')
             else:
-                messages.success(request, ('Nie udało się dodać nowej drogi!'))
-                return redirect('test')
+                messages.success(request, ('Nie udało się aktualizować Twojej grupy!'))
+                return redirect('add_user_route')
         else:
             form = UserGroupForm()
 
-    return render(request, 'test.html', {
+    return render(request, 'add_user_route.html', {
         'form': form,
         'current_edition_value': current_edition_value,
         'max_user_edition_value': max_user_edition_value,
-    })
-
-
-# -----------------------------------------------------------------------------------------
-
-
-def add_user_route_view(request):
-    if request.POST:
-        form = AddUserRouteForm(request.POST)
-        if form.is_valid():
-            u = User_routes.objects.create(
-                user_name=request.user,
-                user_routes=form.cleaned_data['user_routes']
-            )
-            messages.success(request, ('Udało się dodać nową drogę!'))
-            return redirect('add_user_route')
-        else:
-            messages.success(request, ('Nie udało się dodać nowej drogi!'))
-            return redirect('add_user_route')
-    else:
-        form = AddUserRouteForm()
-
-    return render(request, 'add_user_route.html', {
-        'form': form,
     })
 
 
