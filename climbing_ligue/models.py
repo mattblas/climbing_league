@@ -9,7 +9,6 @@ class Active_edition(models.Model):
     current_edition = models.BooleanField(verbose_name='Bieżąca')
 
 
-
 # ----- MODEL DRÓG WSPINACZKOWYCH -----
 class Route(models.Model):
     route_name = models.CharField(max_length=60, unique=False, verbose_name='Nazwa Drogi')

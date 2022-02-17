@@ -15,8 +15,18 @@ from django.db.models import Max
 
 
 def test(request):
+    edition_list = Active_edition.objects.all()
+    if request.method == "POST":
+        id_list = request.POST.getlist('boxes')
+        edition_list.update(current_edition=False)
+        for x in id_list:
+            Active_edition.objects.filter(pk=int(x)).update(current_edition=True)
+
+        messages.success(request, ('Udało się zaktualizować edycję!'))
+        return redirect('test')
 
     return render(request, 'test.html', {
+        'edition_list': edition_list
     })
 
 
@@ -31,7 +41,7 @@ def add_user_route_view(request):
     max_user_edition = User_Group.objects.aggregate(Max('edition'))
     max_user_edition_value = max_user_edition['edition__max']
 
-    if max_user_edition_value == current_edition_value:
+    if max_user_edition_value >= current_edition_value:
         if request.POST:
             form = AddUserRouteForm(request.POST)
             if form.is_valid():
@@ -107,10 +117,18 @@ def user_home(request):
 
 
 def update_edition_view(request):
-    all_editions = Active_edition.objects.all()
+    edition_list = Active_edition.objects.all()
+    if request.method == "POST":
+        id_list = request.POST.getlist('boxes')
+        edition_list.update(current_edition=False)
+        for x in id_list:
+            Active_edition.objects.filter(pk=int(x)).update(current_edition=True)
+
+        messages.success(request, ('Udało się zaktualizować edycję!'))
+        return redirect('update_edition')
 
     return render(request, 'update_edition.html', {
-        'all_editions': all_editions,
+        'edition_list': edition_list
     })
 
 

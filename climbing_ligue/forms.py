@@ -4,7 +4,17 @@ from climbing_ligue.models import Route, User_routes, Active_edition, User_Group
 from django.db import connection
 
 
-# --- TO DO --- TO DO --- TO DO --- FORMULARZ AKTUALIZACJI GRUPY --- TO DO --- TO DO --- TO DO ---
+
+# --- TO DO --- TO DO --- TO DO --- FORMULARZ AKTUALIZACJI EDYCJI --- TO DO --- TO DO --- TO DO ---
+# --------------------------------------------------------------
+class UpdateEdition(ModelForm):
+    class Meta:
+        model = Active_edition
+        fields = '__all__'
+
+
+
+# ----- FORMULARZ AKTUALIZACJI GRUPY -----
 class UserGroupForm(ModelForm):
 
     user_group_choices = (
@@ -21,15 +31,6 @@ class UserGroupForm(ModelForm):
         fields = ['user_group']
 
 
-# --- TO DO --- TO DO --- TO DO --- FORMULARZ AKTUALIZACJI EDYCJI --- TO DO --- TO DO --- TO DO ---
-# --------------------------------------------------------------
-class UpdateEdition(ModelForm):
-    class Meta:
-        model = Active_edition
-        fields = '__all__'
-
-
-# --------------------------------------------------------------
 
 # FORMULARZ NOWEJ DROGI UŻYTKOWNIKA
 # --------------------------------------------------------------
