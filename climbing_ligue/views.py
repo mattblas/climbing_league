@@ -15,9 +15,47 @@ from django.db.models import Max
 
 
 def test(request):
+    username = request.user
+
+    #GET ACTIVE EDITION
+    current_edition_filter = Active_edition.objects.filter(current_edition=True).values_list('edition', flat=True)
+    current_edition = list(current_edition_filter)
+    current_edition_value = current_edition[0]
+
+    #GET USER GROUP
+    usergroup_filter = User_Group.objects.filter(user_name=username)
+    for x in usergroup_filter:
+        usergroup_value = x.user_group
+
+    #GET USER GENDER
+    usergender_filter = Member.objects.filter(username=username)
+    for x in usergender_filter:
+        usergender_value = x.gender
+
+    #RETURN USER'S POINTS FILTERED BY: GENDER, EDITION, GROUP ------ FIX BUGS
+    user_routes = User_routes.objects.filter(user_routes__edition=current_edition_value, user_routes__route_group=usergroup_value)
+    all_users = Member.objects.filter(gender=usergender_value)
+
+    points_dict = {}
+
+    for user in all_users:
+        i = 0
+        user_routes_filter = user_routes.filter(user_name=user)
+        for route in user_routes_filter:
+            points = route.user_routes.points
+            current_points = i + points
+            i = current_points
+
+        points_dict[user] = i
+
+    sorted_points = sorted(points_dict.items(), key=operator.itemgetter(1), reverse=True)
 
     return render(request, 'test.html', {
-
+        'username': username,
+        'current_edition_value': current_edition_value,
+        'usergroup_value': usergroup_value,
+        'usergender_value': usergender_value,
+        'sorted_points': sorted_points,
     })
 
 
@@ -50,6 +88,7 @@ def add_user_route_view(request):
     current_edition_filter = Active_edition.objects.filter(current_edition=True).values_list('edition', flat=True)
     current_edition = list(current_edition_filter)
     current_edition_value = current_edition[0]
+
     usergroups = User_Group.objects.filter(user_name = request.user)
 
     max_user_edition = usergroups.aggregate(Max('edition'))
@@ -184,7 +223,10 @@ def home(request):
     user_group = User_Group.objects.all()
     current_edition_filter = Active_edition.objects.filter(current_edition=True).values_list('edition', flat=True)
     current_edition = list(current_edition_filter)
-    current_edition_value = current_edition[0]
+    if current_edition:
+        current_edition_value = current_edition[0]
+    else:
+        current_edition_value = 0
     username = request.user.username
 
     points_dict = {}

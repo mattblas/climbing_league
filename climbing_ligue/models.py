@@ -8,6 +8,8 @@ class Active_edition(models.Model):
     edition = models.IntegerField(verbose_name='Edycja', unique=True)
     current_edition = models.BooleanField(verbose_name='Bieżąca', default=False)
 
+    def __str__(self):
+        return str(self.edition)
 
 # ----- MODEL DRÓG WSPINACZKOWYCH -----
 class Route(models.Model):
@@ -27,10 +29,12 @@ class Route(models.Model):
 
 # ----- MODEL POKONANYCH DRÓG UŻYTKOWNIKA -----
 class User_routes(models.Model):
-    objects = None
     user_name = models.ForeignKey(Member, verbose_name=("User"), on_delete=models.SET_NULL, null=True)
     user_routes = models.ForeignKey(Route, verbose_name=("Routes"), on_delete=models.SET_NULL, null=True)
     date_created = models.DateTimeField(auto_now=True, null=True)
+
+    def __str__(self):
+        return self.user_name
 
 # ----- MODEL GRUPY UŻYTKOWNIKA -----
 class User_Group(models.Model):
