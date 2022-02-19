@@ -16,7 +16,7 @@ class Route(models.Model):
     route_name = models.CharField(max_length=60, unique=False, verbose_name='Nazwa Drogi')
     route_grade = models.CharField(max_length=5, verbose_name='Wycena')
     points = models.FloatField(verbose_name='Punktacja')
-    edition = models.ForeignKey(Active_edition, verbose_name='Edycja', on_delete=models.SET_NULL, null=True)
+    edition = models.ForeignKey(Active_edition, verbose_name='Edycja', on_delete=models.CASCADE, null=True)
     round = models.CharField(max_length=5, verbose_name='Runda')
     route_group = models.CharField(max_length=60, verbose_name='Grupa')
     add_date = models.DateTimeField(verbose_name='Data dodania', auto_now_add=True)
