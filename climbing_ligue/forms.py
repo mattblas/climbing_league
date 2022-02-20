@@ -21,8 +21,8 @@ class NewEditionForm(ModelForm):
 class UserGroupForm(ModelForm):
 
     user_group_choices = (
-        ('Poczatkujacy', 'Początkujący'),
-        ('Sredniozaawansowani', 'Średniozaawansowani'),
+        ('Początkujący', 'Początkujący'),
+        ('Średniozaawansowani', 'Średniozaawansowani'),
         ('Pro', 'Pro'),
         ('Masters', 'Masters'),
     )
@@ -129,8 +129,8 @@ class AddRouteForm(ModelForm):
     )
 
     route_group_choices = (
-        ('Poczatkujacy', 'Początkujący'),
-        ('Sredniozaawansowani', 'Średniozaawansowani'),
+        ('Początkujący', 'Początkujący'),
+        ('Średniozaawansowani', 'Średniozaawansowani'),
         ('Pro', 'Pro'),
         ('Masters', 'Masters'),
     )

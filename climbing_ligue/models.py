@@ -26,21 +26,14 @@ class Route(models.Model):
     def __str__(self):
         return self.route_name
 
-
 # ----- MODEL POKONANYCH DRÓG UŻYTKOWNIKA -----
 class User_routes(models.Model):
     user_name = models.ForeignKey(Member, verbose_name=("User"), on_delete=models.CASCADE, null=True)
     user_routes = models.ForeignKey(Route, verbose_name=("Routes"), on_delete=models.CASCADE, null=True)
     date_created = models.DateTimeField(auto_now=True, null=True)
 
-    def __str__(self):
-        return self.user_name
-
 # ----- MODEL GRUPY UŻYTKOWNIKA -----
 class User_Group(models.Model):
     user_name = models.ForeignKey(Member, verbose_name='User', on_delete=models.CASCADE, null=True)
     edition = models.IntegerField(verbose_name='Edycja')
     user_group = models.CharField(max_length=60, verbose_name='Grupa')
-
-    def __str__(self):
-        return self.user_name
