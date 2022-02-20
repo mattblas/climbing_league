@@ -305,7 +305,7 @@ def home(request):
                 i = current_points
             points_dict[user] = i
         sorted_points = sorted(points_dict.items(), key=operator.itemgetter(1), reverse=True)
-
+# KATEGORIA OPEN --- TO DO --- TO DO --- TO DO --- TO DO --- TO DO --- TO DO --- TO DO --- TO DO --- TO DO --- TO DO ---
         return render(request, 'home.html', {
             'username': username,
             'current_edition_value': current_edition_value,
