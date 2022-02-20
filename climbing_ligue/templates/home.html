@@ -19,7 +19,7 @@
             <p>- Twoja obecna kategoria: {{ usergroup_value }} - </p>
         </blockquote>
     <figure>
-    <table table class="table table-striped table-hover table-bordered">
+    <table class="table table-striped table-hover table-bordered">
 
         <thead>
             <tr>
@@ -33,7 +33,7 @@
         <tbody>
             {% for k, v in sorted_points %}
             <tr>
-                <td>{{ forloop.counter }}</th>
+                <td>{{ forloop.counter }}</td>
                 <td>{{ k }}</td>
                 <td>{{ usergroup_value }}</td>
                 <td>{{ v }}</td>
@@ -63,7 +63,7 @@
         <tbody>
             {% for k, v in open_sorted_points %}
             <tr>
-                <td>{{ forloop.counter }}</th>
+                <td>{{ forloop.counter }}</td>
                 <td>{{ k }}</td>
                 <td>{% for user in user_group %}
                         {% if user.user_name == k %}
@@ -90,7 +90,7 @@
 <h1 class="display-6" align="center">- TABELA WYNIKÓW - </h1>
 
     <figure>
-        <blockquote class="blockquote" align="center">
+        <blockquote class="blockquote" align="right">
             <p>- Kategoria Open - </p>
         </blockquote>
     <figure>
@@ -109,7 +109,7 @@
             <tbody>
                 {% for k, v in sorted_points %}
                 <tr>
-                    <td>{{ forloop.counter }}</th>
+                    <td>{{ forloop.counter }}</td>
                     <td>{{ k }}</td>
                     <td>
                         {% for user in user_group %}
