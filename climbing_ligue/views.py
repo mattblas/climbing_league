@@ -250,6 +250,8 @@ def home(request):
     # GET ACTIVE USER
     username = request.user
     # GET ACTIVE EDITION
+    all_users = Member.objects.all()  # MOŻNA DODAĆ WARUNKOWANIE 'GENDER'
+    user_group = User_Group.objects.all()
     current_edition_filter = Active_edition.objects.filter(current_edition=True).values_list('edition', flat=True)
     current_edition = list(current_edition_filter)
     # CHECK IF EDITION IS ACTIVE
@@ -258,10 +260,8 @@ def home(request):
     else:
         current_edition_value = 0
 # DO IF USER IS ANONYMOUS
+    user_routes = User_routes.objects.filter(user_routes__edition=current_edition_value)
     if request.user.is_anonymous:
-        all_users = Member.objects.all()  # MOŻNA DODAĆ WARUNKOWANIE 'GENDER'
-        user_routes = User_routes.objects.filter(user_routes__edition=current_edition_value)
-        user_group = User_Group.objects.all()
         # PRINT SCORES FOR ALL USERS IN CURRENT EDITION
         points_dict = {}
         for user in all_users:
@@ -293,10 +293,10 @@ def home(request):
             usergender_value = x.gender
         # RETURN USER'S POINTS FILTERED BY: GENDER, EDITION, GROUP ------ FIX BUGS
         user_routes = User_routes.objects.filter(user_routes__edition=current_edition_value, user_routes__route_group=usergroup_value)
-        all_users = Member.objects.filter(gender=usergender_value)
+        all_users_gender = Member.objects.filter(gender=usergender_value)
         # PRINT SCORES FOR ALL USERS IN CURRENT EDITION FILTERed BY EDITION, GROUP AND GENDER
         points_dict = {}
-        for user in all_users:
+        for user in all_users_gender:
             i = 0
             user_routes_filter = user_routes.filter(user_name=user)
             for route in user_routes_filter:
@@ -305,11 +305,25 @@ def home(request):
                 i = current_points
             points_dict[user] = i
         sorted_points = sorted(points_dict.items(), key=operator.itemgetter(1), reverse=True)
+
 # KATEGORIA OPEN --- TO DO --- TO DO --- TO DO --- TO DO --- TO DO --- TO DO --- TO DO --- TO DO --- TO DO --- TO DO ---
+        open_points_dict = {}
+        for open_user in all_users:
+            i = 0
+            user_routes_filter = user_routes.filter(user_name=open_user)
+            for route in user_routes_filter:
+                points = route.user_routes.points
+                current_points = i + points
+                i = current_points
+            open_points_dict[open_user] = i
+        open_sorted_points = sorted(open_points_dict.items(), key=operator.itemgetter(1), reverse=True)
+
         return render(request, 'home.html', {
             'username': username,
+            'user_group': user_group,
             'current_edition_value': current_edition_value,
             'usergroup_value': usergroup_value,
             'usergender_value': usergender_value,
             'sorted_points': sorted_points,
+            'open_sorted_points': open_sorted_points,
         })
