@@ -5,16 +5,13 @@ from django.db import connection
 
 
 
-# --- TO DO --- TO DO --- TO DO --- FORMULARZ NOWEJ EDYCJI --- TO DO --- TO DO --- TO DO ---
-
+# FORMULARZ NOWEJ EDYCJI
 class NewEditionForm(ModelForm):
     edition = forms.IntegerField(required=True, label='Edycja', min_value=1)
-
 
     class Meta:
         model = Active_edition
         fields = ['edition']
-
 
 
 # ----- FORMULARZ AKTUALIZACJI GRUPY -----
@@ -33,11 +30,7 @@ class UserGroupForm(ModelForm):
         model = User_Group
         fields = ['user_group']
 
-
-
 # FORMULARZ NOWEJ DROGI UŻYTKOWNIKA
-# --------------------------------------------------------------
-
 
 def table_exists(table_name):
     all_tables = connection.introspection.table_names()
@@ -57,7 +50,6 @@ def get_current_edition():
     else:
         return None
 
-
 class AddUserRouteForm(ModelForm):
     user_routes = forms.ModelChoiceField(queryset=Route.objects.all().filter(edition=get_current_edition()))
 
@@ -65,11 +57,8 @@ class AddUserRouteForm(ModelForm):
         model = User_routes
         fields = ['user_routes']
 
-
-# --------------------------------------------------------------
-
 # FORMULARZ DLA NOWEJ DROGI
-# --------------------------------------------------------------
+
 class AddRouteForm(ModelForm):
     route_grade_choices = (
         ('4A', '4A'),
