@@ -11,6 +11,7 @@ class Active_edition(models.Model):
     def __str__(self):
         return str(self.edition)
 
+
 # ----- MODEL DRÓG WSPINACZKOWYCH -----
 class Route(models.Model):
     route_name = models.CharField(max_length=60, unique=False, verbose_name='Nazwa Drogi')
@@ -26,11 +27,19 @@ class Route(models.Model):
     def __str__(self):
         return self.route_name
 
+
 # ----- MODEL POKONANYCH DRÓG UŻYTKOWNIKA -----
 class User_routes(models.Model):
     user_name = models.ForeignKey(Member, verbose_name=("User"), on_delete=models.CASCADE, null=True)
     user_routes = models.ForeignKey(Route, verbose_name=("Routes"), on_delete=models.CASCADE, null=True)
     date_created = models.DateTimeField(auto_now=True, null=True)
+
+    class Meta:
+        unique_together = ('user_name', 'user_routes',)
+        # TU BĘDZIE PROBLEM JAK DROGA POJAWI SIĘ RÓWNIEŻ W INNEJ EDYCJI
+        # TRZEBA NAPISAĆ validate_unique method
+        # https://stackoverflow.com/questions/4440010/django-unique-together-with-foreign-keys
+
 
 # ----- MODEL GRUPY UŻYTKOWNIKA -----
 class User_Group(models.Model):

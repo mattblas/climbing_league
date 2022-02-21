@@ -53,18 +53,19 @@ def test(request):
     else:
         usergroup_value = 'N/A'
         usergender_value = 'N/A'
-        #GET USER GROUP
+# GET USER GROUP
         usergroup_filter = User_Group.objects.filter(user_name=username)
         for x in usergroup_filter:
             usergroup_value = x.user_group
 
-        #GET USER GENDER
+# GET USER GENDER
         usergender_filter = Member.objects.filter(username=username)
         for x in usergender_filter:
             usergender_value = x.gender
 
-        #RETURN USER'S POINTS FILTERED BY: GENDER, EDITION, GROUP ------ FIX BUGS
-        user_routes = User_routes.objects.filter(user_routes__edition=current_edition_value, user_routes__route_group=usergroup_value)
+# RETURN USER'S POINTS FILTERED BY: GENDER, EDITION, GROUP ------ FIX BUGS
+        user_routes = User_routes.objects.filter(user_routes__edition=current_edition_value,
+                                                 user_routes__route_group=usergroup_value)
         all_users = Member.objects.filter(gender=usergender_value)
 
         points_dict = {}
@@ -120,7 +121,7 @@ def add_user_route_view(request):
     current_edition = list(current_edition_filter)
     current_edition_value = current_edition[0]
 
-    usergroups = User_Group.objects.filter(user_name = request.user)
+    usergroups = User_Group.objects.filter(user_name=request.user)
 
     max_user_edition = usergroups.aggregate(Max('edition'))
     max_user_edition_value = max_user_edition['edition__max']
@@ -284,9 +285,10 @@ def home(request):
         })
 # DO IF USER IS LOGGED IN
     else:
-        # GET USER GROUP
+        # variable referenced before assignment BUG FIX
         usergroup_value = 'N/A'
-        usergender_value ='N/A'
+        usergender_value = 'N/A'
+        # GET USER GROUP
         usergroup_filter = User_Group.objects.filter(user_name=username)
         for x in usergroup_filter:
             usergroup_value = x.user_group
@@ -295,7 +297,9 @@ def home(request):
         for x in usergender_filter:
             usergender_value = x.gender
         # RETURN USER'S POINTS FILTERED BY: GENDER, EDITION, GROUP ------ FIX BUGS
-        user_routes = User_routes.objects.filter(user_routes__edition=current_edition_value, user_routes__route_group=usergroup_value)
+        user_routes = User_routes.objects.filter(user_routes__edition=current_edition_value,
+                                                 user_routes__route_group=usergroup_value)
+        open_user_routes = User_routes.objects.filter(user_routes__edition=current_edition_value)
         all_users_gender = Member.objects.filter(gender=usergender_value)
         # PRINT SCORES FOR ALL USERS IN CURRENT EDITION FILTERed BY EDITION, GROUP AND GENDER
         points_dict = {}
@@ -313,7 +317,7 @@ def home(request):
         open_points_dict = {}
         for open_user in all_users:
             i = 0
-            user_routes_filter = user_routes.filter(user_name=open_user)
+            user_routes_filter = open_user_routes.filter(user_name=open_user)
             for route in user_routes_filter:
                 points = route.user_routes.points
                 current_points = i + points
