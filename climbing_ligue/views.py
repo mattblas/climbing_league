@@ -1,7 +1,6 @@
 import operator
 
 from django.contrib import messages
-from django.contrib.auth.models import AnonymousUser
 from django.shortcuts import render, redirect
 
 from climbing_ligue.forms import AddRouteForm, AddUserRouteForm, UserGroupForm, NewEditionForm
@@ -52,6 +51,8 @@ def test(request):
             'current_edition_value': current_edition_value,
         })
     else:
+        usergroup_value = 'N/A'
+        usergender_value = 'N/A'
         #GET USER GROUP
         usergroup_filter = User_Group.objects.filter(user_name=username)
         for x in usergroup_filter:
@@ -284,6 +285,8 @@ def home(request):
 # DO IF USER IS LOGGED IN
     else:
         # GET USER GROUP
+        usergroup_value = 'N/A'
+        usergender_value ='N/A'
         usergroup_filter = User_Group.objects.filter(user_name=username)
         for x in usergroup_filter:
             usergroup_value = x.user_group
