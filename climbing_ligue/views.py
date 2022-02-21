@@ -263,7 +263,6 @@ def home(request):
         current_edition_value = 0
     open_user_routes = User_routes.objects.filter(user_routes__edition=current_edition_value)
 # DO IF USER IS ANONYMOUS
-    user_routes = User_routes.objects.filter(user_routes__edition=current_edition_value)
     if request.user.is_anonymous:
         # PRINT SCORES FOR ALL USERS IN CURRENT EDITION
         open_points_dict = {}
@@ -290,7 +289,7 @@ def home(request):
         usergroup_value = 'N/A'
         usergender_value = 'N/A'
         # GET USER GROUP
-        usergroup_filter = User_Group.objects.filter(user_name=username)
+        usergroup_filter = User_Group.objects.filter(user_name=username, edition=current_edition_value)
         for x in usergroup_filter:
             usergroup_value = x.user_group
         # GET USER GENDER
@@ -314,7 +313,7 @@ def home(request):
             points_dict[user] = i
         sorted_points = sorted(points_dict.items(), key=operator.itemgetter(1), reverse=True)
 
-# KATEGORIA OPEN --- TO DO --- TO DO --- TO DO --- TO DO --- TO DO --- TO DO --- TO DO --- TO DO --- TO DO --- TO DO ---
+# KATEGORIA OPEN
         open_points_dict = {}
         for open_user in all_users:
             i = 0
