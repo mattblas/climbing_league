@@ -261,23 +261,24 @@ def home(request):
         current_edition_value = current_edition[0]
     else:
         current_edition_value = 0
+    open_user_routes = User_routes.objects.filter(user_routes__edition=current_edition_value)
 # DO IF USER IS ANONYMOUS
     user_routes = User_routes.objects.filter(user_routes__edition=current_edition_value)
     if request.user.is_anonymous:
         # PRINT SCORES FOR ALL USERS IN CURRENT EDITION
-        points_dict = {}
-        for user in all_users:
+        open_points_dict = {}
+        for open_user in all_users:
             i = 0
-            user_routes_filter = user_routes.filter(user_name=user)
+            user_routes_filter = open_user_routes.filter(user_name=open_user)
             for route in user_routes_filter:
                 points = route.user_routes.points
                 current_points = i + points
                 i = current_points
-            points_dict[user] = i
-        sorted_points = sorted(points_dict.items(), key=operator.itemgetter(1), reverse=True)
+            open_points_dict[open_user] = i
+        open_sorted_points = sorted(open_points_dict.items(), key=operator.itemgetter(1), reverse=True)
 
         return render(request, 'home.html', {
-            'sorted_points': sorted_points,
+            'open_sorted_points': open_sorted_points,
             'user': username,
             'all_users': all_users,
             'user_group': user_group,
@@ -299,7 +300,7 @@ def home(request):
         # RETURN USER'S POINTS FILTERED BY: GENDER, EDITION, GROUP ------ FIX BUGS
         user_routes = User_routes.objects.filter(user_routes__edition=current_edition_value,
                                                  user_routes__route_group=usergroup_value)
-        open_user_routes = User_routes.objects.filter(user_routes__edition=current_edition_value)
+
         all_users_gender = Member.objects.filter(gender=usergender_value)
         # PRINT SCORES FOR ALL USERS IN CURRENT EDITION FILTERed BY EDITION, GROUP AND GENDER
         points_dict = {}
