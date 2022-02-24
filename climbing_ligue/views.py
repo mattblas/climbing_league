@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 
 from climbing_ligue.forms import AddRouteForm, AddUserRouteForm, UserGroupForm, NewEditionForm
-from climbing_ligue.models import Route, User_routes, Active_edition, User_Group
+from climbing_ligue.models import Route, User_routes, Active_edition, User_Group, Active_round
 from members.models import Member
 from django.db.models import Max
 
@@ -214,6 +214,25 @@ def update_edition_view(request):
 
     return render(request, 'update_edition.html', {
         'edition_list': edition_list
+    })
+
+
+# -----------------------------------------------------------------------------------------
+
+
+def update_round_view(request):
+    round_list = Active_round.objects.all()
+    if request.method == "POST":
+        id_list = request.POST.getlist('boxes')
+        round_list.update(current_round=False)
+        for x in id_list:
+            Active_round.objects.filter(pk=int(x)).update(current_round=True)
+
+        messages.success(request, ('Udało się zaktualizować rundę!'))
+        return redirect('update_round')
+
+    return render(request, 'update_round.html', {
+        'round_list': round_list
     })
 
 

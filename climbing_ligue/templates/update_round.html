@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="p-3 mb-2 text-warning">
+<h1>Aktualizuj Rundę</h1>
+</div>
+<br><br>
+
+<!----- WSZYSTKIE EDYCJE --------------------------------------------->
+LISTA WSZYSTKICH RUND<br><br><br>
+<form action="" method="POST">{% csrf_token %}
+<table class="table table-striped table-hover table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Runda</th>
+      <th scope="col">Aktywna</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for round in round_list %}
+    <tr>
+        <td>
+            {{ round.round }} <br>
+        </td>
+        <td>
+            {% if round.current_round %}
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" checked="checked" value={{round.id}} name="boxes">
+                </div>
+            {% else %}
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value={{round.id}} name="boxes">
+                </div>
+            {% endif %}
+        </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<p align="right"><button class="btn btn-secondary" type="submit">Aktualizuj</button></p>
+</form>
+
+<!--<form action="" method="POST">{% csrf_token %}-->
+<!--    {{form.as_p}}-->
+<!--    <p align="right"><button class="btn btn-secondary" type="submit">Dodaj nową edycję</button></p>-->
+<!--</form>-->
+
+
+{% endblock %}
