@@ -3,9 +3,9 @@ from django.forms import ModelForm
 from climbing_ligue.models import Route, User_routes, Active_edition, User_Group
 from django.db import connection
 
-
-
 # FORMULARZ NOWEJ EDYCJI
+
+
 class NewEditionForm(ModelForm):
     edition = forms.IntegerField(required=True, label='Edycja', min_value=1)
 
@@ -32,6 +32,7 @@ class UserGroupForm(ModelForm):
 
 # FORMULARZ NOWEJ DROGI UŻYTKOWNIKA
 
+
 def table_exists(table_name):
     all_tables = connection.introspection.table_names()
     if table_name in all_tables:
@@ -50,6 +51,7 @@ def get_current_edition():
     else:
         return None
 
+
 class AddUserRouteForm(ModelForm):
     user_routes = forms.ModelChoiceField(queryset=Route.objects.all().filter(edition=get_current_edition()))
 
@@ -58,6 +60,7 @@ class AddUserRouteForm(ModelForm):
         fields = ['user_routes']
 
 # FORMULARZ DLA NOWEJ DROGI
+
 
 class AddRouteForm(ModelForm):
     route_grade_choices = (

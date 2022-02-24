@@ -10,10 +10,6 @@ from django.db.models import Max
 
 # Create your views here.
 
-
-# -----------------------------------------------------------------------------------------
-
-
 def test(request):
 
     username = request.user
@@ -28,7 +24,7 @@ def test(request):
         current_edition_value = 0
 
     if request.user.is_anonymous:
-        all_users = Member.objects.all() #MOŻNA DODAĆ WARUNKOWANIE 'GENDER'
+        all_users = Member.objects.all()  # MOŻNA DODAĆ WARUNKOWANIE 'GENDER'
         user_routes = User_routes.objects.filter(user_routes__edition=current_edition_value)
         user_group = User_Group.objects.all()
 # PRINT SCORES FOR ALL USERS IN CURRENT EDITION
@@ -89,6 +85,38 @@ def test(request):
             'usergender_value': usergender_value,
             'sorted_points': sorted_points,
         })
+
+# -----------------------------------------------------------------------------------------
+
+
+def user_home(request):
+    # ----- LISTA WSZYSTKICH DRÓG -------------------------------------------------------------
+
+    current_edition_filter = Active_edition.objects.filter(current_edition=True).values_list('edition', flat=True)
+    current_edition = list(current_edition_filter)
+    current_edition_value = current_edition[0]
+
+    all_route_list = Route.objects.all().order_by('-edition', 'round', 'points')
+
+    # ----- LISTA WSZYSTKICH DRÓG UŻYTKOWNIKA ------------------------------------------------------------
+    user_routes = User_routes.objects.all()
+    user_routes_filter = user_routes.filter(user_name=request.user)
+
+    # ----- AKTUALNA PUNKTACJA ----------------------------------------------------------------
+    i = 0
+    current_points = 0
+
+    for route in user_routes_filter:
+        if route.user_routes.edition == current_edition_value:
+            current_points = i + route.user_routes.points
+            i = current_points
+
+    return render(request, 'user_home.html', {
+        'all_route_list': all_route_list,
+        'filter': user_routes_filter,
+        'current_points': current_points,
+        'current_edition_value': current_edition_value
+    })
 
 
 # -----------------------------------------------------------------------------------------
@@ -167,39 +195,6 @@ def add_user_route_view(request):
         'form': form,
         'current_edition_value': current_edition_value,
         'max_user_edition_value': max_user_edition_value,
-    })
-
-
-# -----------------------------------------------------------------------------------------
-
-
-def user_home(request):
-    # ----- LISTA WSZYSTKICH DRÓG -------------------------------------------------------------
-
-    current_edition_filter = Active_edition.objects.filter(current_edition=True).values_list('edition', flat=True)
-    current_edition = list(current_edition_filter)
-    current_edition_value = current_edition[0]
-
-    all_route_list = Route.objects.all().order_by('-edition', 'round', 'points')
-
-    # ----- LISTA WSZYSTKICH DRÓG UŻYTKOWNIKA ------------------------------------------------------------
-    user_routes = User_routes.objects.all()
-    user_routes_filter = user_routes.filter(user_name=request.user)
-
-    # ----- AKTUALNA PUNKTACJA ----------------------------------------------------------------
-    i = 0
-    current_points = 0
-
-    for route in user_routes_filter:
-        if route.user_routes.edition == current_edition_value:
-            current_points = i + route.user_routes.points
-            i = current_points
-
-    return render(request, 'user_home.html', {
-        'all_route_list': all_route_list,
-        'filter': user_routes_filter,
-        'current_points': current_points,
-        'current_edition_value': current_edition_value
     })
 
 
