@@ -4,6 +4,14 @@ from members.models import Member
 
 # Create your models here.
 # ----- MODEL AKTYWNYCH EDYCJI -----
+class Active_round(models.Model):
+    round = models.CharField(max_length=5, verbose_name='Runda')
+    current_round = models.BooleanField(verbose_name='Bieżąca', default=False)
+
+    def __str__(self):
+        return str(self.round)
+
+# ----- MODEL AKTYWNYCH EDYCJI -----
 class Active_edition(models.Model):
     edition = models.IntegerField(verbose_name='Edycja', unique=True)
     current_edition = models.BooleanField(verbose_name='Bieżąca', default=False)

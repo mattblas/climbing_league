@@ -117,7 +117,7 @@ class AddRouteForm(ModelForm):
         ('2', '2'),
         ('3', '3'),
         ('4', '4'),
-        ('Final', 'Finał'),
+        ('5', 'Finał'),
     )
 
     route_group_choices = (
