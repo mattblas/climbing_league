@@ -10,83 +10,9 @@ from django.db.models import Max
 
 # Create your views here.
 
+
 def test(request):
-
-    username = request.user
-
-    # GET ACTIVE EDITION
-    current_edition_filter = Active_edition.objects.filter(current_edition=True).values_list('edition', flat=True)
-    current_edition = list(current_edition_filter)
-
-    if current_edition:
-        current_edition_value = current_edition[0]
-    else:
-        current_edition_value = 0
-
-    if request.user.is_anonymous:
-        all_users = Member.objects.all()  # MOŻNA DODAĆ WARUNKOWANIE 'GENDER'
-        user_routes = User_routes.objects.filter(user_routes__edition=current_edition_value)
-        user_group = User_Group.objects.all()
-# PRINT SCORES FOR ALL USERS IN CURRENT EDITION
-        points_dict = {}
-        for user in all_users:
-            i = 0
-            user_routes_filter = user_routes.filter(user_name=user)
-            for route in user_routes_filter:
-                points = route.user_routes.points
-                current_points = i + points
-                i = current_points
-            points_dict[user] = i
-        sorted_points = sorted(points_dict.items(), key=operator.itemgetter(1), reverse=True)
-
-        return render(request, 'home.html', {
-            'sorted_points': sorted_points,
-            'user': username,
-            'all_users': all_users,
-            'user_group': user_group,
-            'current_edition_value': current_edition_value,
-        })
-    else:
-        usergroup_value = 'N/A'
-        usergender_value = 'N/A'
-# GET USER GROUP
-        usergroup_filter = User_Group.objects.filter(user_name=username)
-        for x in usergroup_filter:
-            usergroup_value = x.user_group
-
-# GET USER GENDER
-        usergender_filter = Member.objects.filter(username=username)
-        for x in usergender_filter:
-            usergender_value = x.gender
-
-# RETURN USER'S POINTS FILTERED BY: GENDER, EDITION, GROUP ------ FIX BUGS
-        user_routes = User_routes.objects.filter(user_routes__edition=current_edition_value,
-                                                 user_routes__route_group=usergroup_value)
-        all_users = Member.objects.filter(gender=usergender_value)
-
-        points_dict = {}
-
-        for user in all_users:
-            i = 0
-            user_routes_filter = user_routes.filter(user_name=user)
-            for route in user_routes_filter:
-                points = route.user_routes.points
-                current_points = i + points
-                i = current_points
-
-            points_dict[user] = i
-
-        sorted_points = sorted(points_dict.items(), key=operator.itemgetter(1), reverse=True)
-
-        return render(request, 'test.html', {
-            'username': username,
-            'current_edition_value': current_edition_value,
-            'usergroup_value': usergroup_value,
-            'usergender_value': usergender_value,
-            'sorted_points': sorted_points,
-        })
-
-# -----------------------------------------------------------------------------------------
+    return render(request, 'test.html')
 
 
 def user_home(request):

@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from climbing_ligue.models import Route, User_routes, Active_edition, User_Group
+from climbing_ligue.models import Route, User_routes, Active_edition, User_Group, Active_round
 from django.db import connection
 
 # FORMULARZ NOWEJ EDYCJI
@@ -51,17 +51,27 @@ def get_current_edition():
     else:
         return None
 
+def get_current_round():
+    if table_exists('climbing_ligue_Active_round'):
+        current_round = list(Active_round.objects.filter(current_round=True).values_list('round', flat=True))
+        if current_round:
+            return current_round[0]
+        else:
+            return None
+    else:
+        return None
 
+# FORMULARZ NOWEJ DROGI UŻYTKOWNIKA
 class AddUserRouteForm(ModelForm):
     user_routes = forms.ModelChoiceField(queryset=Route.objects.all().filter(edition=get_current_edition()))
+    user_routes_poczatkujacy = forms.ModelChoiceField(queryset=Route.objects.all().filter(edition=get_current_edition()).filter(round=get_current_round()))
 
     class Meta:
         model = User_routes
-        fields = ['user_routes']
+        fields = ['user_routes', 'user_routes_poczatkujacy']
+
 
 # FORMULARZ DLA NOWEJ DROGI
-
-
 class AddRouteForm(ModelForm):
     route_grade_choices = (
         ('4A', '4A'),

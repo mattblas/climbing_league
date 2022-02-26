@@ -9,87 +9,10 @@
 
 <h3>Test Site</h3>
 <br><br><br>
---- Komentarz ---<br>
-Zalogowany użytkownik: {{ username }} <br>
-Aktualna edycja: {{ current_edition_value }} <br>
-Grupa użytkownika: {{ usergroup_value }} <br>
-User gender: {{ usergender_value }} <br><br><br>
+--- TEST ---<br>
+<!--Zalogowany użytkownik: {{ username }} <br>-->
+<!--Aktualna edycja: {{ current_edition_value }} <br>-->
+<!--Grupa użytkownika: {{ usergroup_value }} <br>-->
+<!--User gender: {{ usergender_value }} <br><br><br>-->
 
-<!--SEKCJA DLA ZALOGOWANYCH-->
-{% if request.user.is_authenticated %}
-    <table table class="table table-striped table-hover table-bordered">
-
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Użytkownik</th>
-                    <th scope="col">Kategoria</th>
-                    <th scope="col">Wynik</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                {% for k, v in sorted_points %}
-                <tr>
-                    <td>{{ forloop.counter }}</th>
-                    <td>{{ k }}</td>
-                    <td>{{ usergroup_value }}</td>
-                    <td>{{ v }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-
-        </table>
-
-<!--SEKCJA DLA NIEZALOGOWANYCH-->
-{% else %}
-<!--  TABELA WYNIKÓW ------------------------------ ---------------------------------------- -->
-    <h1 class="display-6" align="right">Cześć, zaloguj się</h1>
-        <a class="nav-link" align="right" href="{% url 'login' %}">Login</a><p>
-        <a class="nav-link" align="right" href="{% url 'register' %}">Rejestracja</a>
-    <h1 class="display-6" align="center">- TABELA WYNIKÓW - </h1>
-
-    <figure>
-        <blockquote class="blockquote" align="center">
-            <p>- Kategoria Open - </p>
-            <P><h6>>>> ZMIENIĆ ŻEBY POKAZYWAŁO KATEGORIĘ UŻYTKOWNIKA <<<</h6></P>
-            <P><h6>>>> ZMIENIĆ ŻEBY WYRÓŻNIAŁO WIERSZ ZAWODNIKA <<<</h6></P>
-        </blockquote>
-    <figure>
-
-    <table table class="table table-striped table-hover table-bordered">
-
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Użytkownik</th>
-                    <th scope="col">Kategoria</th>
-                    <th scope="col">Wynik</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                {% for k, v in sorted_points %}
-                <tr>
-                    <td>{{ forloop.counter }}</th>
-                    <td>{{ k }}</td>
-                    <td>
-                        {% for user in user_group %}
-                            {% if user.user_name == k %}
-                                {% if user.edition == current_edition_value %}
-                                  {{ user.user_group }}
-                                {% endif %}
-                            {% endif %}
-                        {% endfor %}
-                    </td>
-                    <td>{{ v }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-
-        </table>
-
-
-    <br><br><br>
-{%endif%}
 {% endblock %}
