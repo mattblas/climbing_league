@@ -4,8 +4,6 @@ from climbing_ligue.models import Route, User_routes, Active_edition, User_Group
 from django.db import connection
 
 # FORMULARZ NOWEJ EDYCJI
-
-
 class NewEditionForm(ModelForm):
     edition = forms.IntegerField(required=True, label='Edycja', min_value=1)
 
@@ -52,7 +50,7 @@ def get_current_edition():
         return None
 
 def get_current_round():
-    if table_exists('climbing_ligue_Active_round'):
+    if table_exists('climbing_ligue_active_round'):
         current_round = list(Active_round.objects.filter(current_round=True).values_list('round', flat=True))
         if current_round:
             return current_round[0]
@@ -63,13 +61,15 @@ def get_current_round():
 
 # FORMULARZ NOWEJ DROGI UŻYTKOWNIKA
 class AddUserRouteForm(ModelForm):
-    user_routes = forms.ModelChoiceField(queryset=Route.objects.all().filter(edition=get_current_edition()))
-    user_routes_poczatkujacy = forms.ModelChoiceField(queryset=Route.objects.all().filter(edition=get_current_edition()).filter(round=get_current_round()))
+    #user_routes = forms.ModelChoiceField(queryset=Route.objects.all().filter(edition=get_current_edition()))
+    user_routes_001 = forms.ModelChoiceField(queryset=Route.objects.all().filter(edition=get_current_edition()).filter(round=get_current_round()).filter(route_group='Początkujący'))
+    user_routes_002 = forms.ModelChoiceField(queryset=Route.objects.all().filter(edition=get_current_edition()).filter(round=get_current_round()).filter(route_group='Średniozaawansowani'))
+    user_routes_003 = forms.ModelChoiceField(queryset=Route.objects.all().filter(edition=get_current_edition()).filter(round=get_current_round()).filter(route_group='Pro'))
+    user_routes_004 = forms.ModelChoiceField(queryset=Route.objects.all().filter(edition=get_current_edition()).filter(round=get_current_round()).filter(route_group='Masters'))
 
     class Meta:
         model = User_routes
-        fields = ['user_routes', 'user_routes_poczatkujacy']
-
+        fields = ['user_routes_001', 'user_routes_002', 'user_routes_003', 'user_routes_004']
 
 # FORMULARZ DLA NOWEJ DROGI
 class AddRouteForm(ModelForm):

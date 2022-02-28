@@ -54,3 +54,6 @@ class User_Group(models.Model):
     user_name = models.ForeignKey(Member, verbose_name='User', on_delete=models.CASCADE, null=True)
     edition = models.IntegerField(verbose_name='Edycja')
     user_group = models.CharField(max_length=60, verbose_name='Grupa')
+
+    def __str__(self):
+        return self.user_group

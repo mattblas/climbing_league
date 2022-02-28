@@ -10,9 +10,94 @@ from django.db.models import Max
 
 # Create your views here.
 
+def sign_up_new_edition_view(request):
+
+    current_edition_filter = Active_edition.objects.filter(current_edition=True).values_list('edition', flat=True)
+    current_edition = list(current_edition_filter)
+    current_edition_value = current_edition[0]
+
+    if request.POST:
+        form = UserGroupForm(request.POST)
+        if form.is_valid():
+            u = User_Group.objects.create(
+                user_name=request.user,
+                edition=current_edition_value,
+                user_group=form.cleaned_data['user_group']
+            )
+            messages.success(request, ('Udało się aktualizować Twoją grupę!'))
+            return redirect('test')
+        else:
+            messages.success(request, ('Nie udało się aktualizować Twojej grupy!'))
+            return redirect('sign_up_new_edition')
+    else:
+        form = UserGroupForm()
+
+    return render(request, 'sign_up_new_edition.html', {
+        'form': form,
+        'current_edition_value': current_edition_value,
+    })
 
 def test(request):
-    return render(request, 'test.html')
+    current_edition_filter = Active_edition.objects.filter(current_edition=True).values_list('edition', flat=True)
+    current_edition = list(current_edition_filter)
+    current_edition_value = current_edition[0]
+    usergroups = User_Group.objects.filter(user_name=request.user)
+
+    max_user_edition = usergroups.aggregate(Max('edition'))
+    max_user_edition_value = max_user_edition['edition__max']
+
+    if max_user_edition_value is not None:
+        max_user_edition_value = max_user_edition['edition__max']
+    else:
+        max_user_edition_value = 0
+
+    if not User_Group.objects.filter(edition=int(current_edition_value)).filter(user_name=request.user).exists():
+        return redirect('sign_up_new_edition')
+    else:
+
+        current_usergroup_filter = User_Group.objects.filter(edition=int(current_edition_value)).filter(user_name=request.user)
+        current_usergroup = list(current_usergroup_filter)
+        current_usergroup_value = current_usergroup[0]
+
+
+        if max_user_edition_value == current_edition_value:
+            if request.POST:
+                form = AddUserRouteForm(request.POST, )
+                if form.is_valid():
+                    u = User_routes.objects.create(
+                        user_name=request.user,
+                        user_routes=form.cleaned_data['user_routes']
+                    )
+                    messages.success(request, ('Udało się dodać nową drogę!'))
+                    return redirect('test')
+                else:
+                    messages.success(request, ('Nie udało się dodać nowej drogi!'))
+                    return redirect('test')
+            else:
+                form = AddUserRouteForm()
+        else:
+            if request.POST:
+                form = UserGroupForm(request.POST)
+                if form.is_valid():
+                    u = User_Group.objects.create(
+                        user_name=request.user,
+                        edition=current_edition_value,
+                        user_group=form.cleaned_data['user_group']
+                        )
+                    messages.success(request, ('Udało się aktualizować Twoją grupę!'))
+                    return redirect('test')
+                else:
+                    messages.success(request, ('Nie udało się aktualizować Twojej grupy!'))
+                    return redirect('test')
+            else:
+                form = UserGroupForm()
+
+        return render(request, 'test.html', {
+            'form': form,
+            'current_edition_value': current_edition_value,
+            'max_user_edition_value': max_user_edition_value,
+            'current_usergroup_value': str(current_usergroup_value),
+        })
 
 
 def user_home(request):
@@ -74,7 +159,6 @@ def add_user_route_view(request):
     current_edition_filter = Active_edition.objects.filter(current_edition=True).values_list('edition', flat=True)
     current_edition = list(current_edition_filter)
     current_edition_value = current_edition[0]
-
     usergroups = User_Group.objects.filter(user_name=request.user)
 
     max_user_edition = usergroups.aggregate(Max('edition'))
@@ -85,7 +169,7 @@ def add_user_route_view(request):
     else:
         max_user_edition_value = 0
 
-    if max_user_edition_value >= current_edition_value:
+    if max_user_edition_value == current_edition_value:
         if request.POST:
             form = AddUserRouteForm(request.POST)
             if form.is_valid():

@@ -5,14 +5,36 @@
 <div class="p-3 mb-2 text-warning">
 <h1>Test Site</h1>
 </div>
-<br><br>
+Current Edition Value: {{current_edition_value}}<br>
+Max User Edition Value: {{max_user_edition_value}}<br>
+User Group: {{ current_usergroup_value }}
 
-<h3>Test Site</h3>
 <br><br><br>
---- TEST ---<br>
-<!--Zalogowany użytkownik: {{ username }} <br>-->
-<!--Aktualna edycja: {{ current_edition_value }} <br>-->
-<!--Grupa użytkownika: {{ usergroup_value }} <br>-->
-<!--User gender: {{ usergender_value }} <br><br><br>-->
+{% if max_user_edition_value == current_edition_value %}
+  Wybierz drogę do dodania.
+<br><br><br>
+{% else %}
+  Wybierz w jakiej grupie chcesz rywalizować.<br>
+  Nie będziesz mógł zmienić tego wyboru do czasu startu nowej edycji zawodów.
+<br><br><br>
+{% endif %}
 
+<form method="POST" class="post-form">{% csrf_token %}
+
+  <p>{% render_field form.user_group class="form-select" %}</p>
+  {% if current_usergroup_value == 'Początkujący' %}
+  <p>{% render_field form.user_routes_001 class="form-select" %}</p>
+  {% else %}
+    {% if current_usergroup_value == 'Średniozaawansowani'%}
+    <p>{% render_field form.user_routes_002 class="form-select" %}</p>
+    {% else %}
+      {% if current_usergroup_value == 'Pro'%}
+      <p>{% render_field form.user_routes_003 class="form-select" %}</p>
+      {% else %}
+      <p>{% render_field form.user_routes_004 class="form-select" %}</p>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+  <p align="right"><button type="submit" class="btn btn-secondary">Dodaj</button></p>
+</form>
 {% endblock %}

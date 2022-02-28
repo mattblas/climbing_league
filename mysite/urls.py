@@ -25,6 +25,7 @@ from climbing_ligue.views import (
     update_edition_view,
     add_new_edition_view,
     update_round_view,
+    sign_up_new_edition_view,
     )
 
 from members.views import(
@@ -46,4 +47,5 @@ urlpatterns = [
     path('update_edition/', update_edition_view, name='update_edition'),
     path('update_round/', update_round_view, name='update_round'),
     path('add_new_edition/', add_new_edition_view, name='add_new_edition'),
+    path('sign_up_new_edition/', sign_up_new_edition_view, name='sign_up_new_edition'),
 ]

@@ -2,29 +2,24 @@
 
 {% load widget_tweaks %}
 {% block content %}
-<div class="p-3 mb-2 text-warning">
-<h1>Dodaj nową drogę</h1>
-</div>
-Current Edition Value: {{current_edition_value}}<br>
-Max User Edition Value: {{max_user_edition_value}}<br>
-User Group: {{ current_usergroup_value }}
+    <div class="p-3 mb-2 text-warning">
+    <h1>SignUp New Edition</h1>
+    </div>
 
+Current Edition Value: {{current_edition_value}}<br>
 <br><br><br>
-{% if max_user_edition_value == current_edition_value %}
+
   Wybierz drogę do dodania.
 <br><br><br>
-{% else %}
+
   Wybierz w jakiej grupie chcesz rywalizować.<br>
   Nie będziesz mógł zmienić tego wyboru do czasu startu nowej edycji zawodów.
 <br><br><br>
-{% endif %}
 
 <form method="POST" class="post-form">{% csrf_token %}
 
-    <p>{% render_field form.user_group class="form-select" %}</p>
-    <p>{% render_field form.user_routes class="form-select" %}</p>
-
-
+  <p>{% render_field form.user_group class="form-select" %}</p>
   <p align="right"><button type="submit" class="btn btn-secondary">Dodaj</button></p>
+
 </form>
 {% endblock %}
