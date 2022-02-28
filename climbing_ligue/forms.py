@@ -11,7 +11,6 @@ class NewEditionForm(ModelForm):
         model = Active_edition
         fields = ['edition']
 
-
 # ----- FORMULARZ AKTUALIZACJI GRUPY -----
 class UserGroupForm(ModelForm):
 
@@ -29,15 +28,12 @@ class UserGroupForm(ModelForm):
         fields = ['user_group']
 
 # FORMULARZ NOWEJ DROGI UŻYTKOWNIKA
-
-
 def table_exists(table_name):
     all_tables = connection.introspection.table_names()
     if table_name in all_tables:
         return True
     else:
         return False
-
 
 def get_current_edition():
     if table_exists('climbing_ligue_active_edition'):
@@ -59,7 +55,6 @@ def get_current_round():
     else:
         return None
 
-# FORMULARZ NOWEJ DROGI UŻYTKOWNIKA
 class AddUserRouteForm(ModelForm):
     #user_routes = forms.ModelChoiceField(queryset=Route.objects.all().filter(edition=get_current_edition()))
     user_routes_001 = forms.ModelChoiceField(queryset=Route.objects.all().filter(edition=get_current_edition()).filter(round=get_current_round()).filter(route_group='Początkujący'))
@@ -147,4 +142,3 @@ class AddRouteForm(ModelForm):
     class Meta:
         model = Route
         fields = ('route_name', 'route_grade', 'points', 'edition', 'round', 'route_group')
-# --------------------------------------------------------------
