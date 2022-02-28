@@ -24,14 +24,13 @@ def sign_up_new_edition_view(request):
                 edition=current_edition_value,
                 user_group=form.cleaned_data['user_group']
             )
-            messages.success(request, ('Udało się aktualizować Twoją grupę!'))
-            return redirect('test')
+            messages.success(request, ('Udało się zapisać do nowej edycji zawodów!'))
+            return redirect('add_user_route')
         else:
-            messages.success(request, ('Nie udało się aktualizować Twojej grupy!'))
+            messages.success(request, ('Nie udało zapisać do nowej edycji zawodów!'))
             return redirect('sign_up_new_edition')
     else:
         form = UserGroupForm()
-
     return render(request, 'sign_up_new_edition.html', {
         'form': form,
         'current_edition_value': current_edition_value,
@@ -59,38 +58,20 @@ def test(request):
         current_usergroup = list(current_usergroup_filter)
         current_usergroup_value = current_usergroup[0]
 
-
-        if max_user_edition_value == current_edition_value:
-            if request.POST:
-                form = AddUserRouteForm(request.POST, )
-                if form.is_valid():
-                    u = User_routes.objects.create(
-                        user_name=request.user,
-                        user_routes=form.cleaned_data['user_routes']
-                    )
-                    messages.success(request, ('Udało się dodać nową drogę!'))
-                    return redirect('test')
-                else:
-                    messages.success(request, ('Nie udało się dodać nowej drogi!'))
-                    return redirect('test')
+        if request.POST:
+            form = AddUserRouteForm(request.POST, )
+            if form.is_valid():
+                u = User_routes.objects.create(
+                    user_name=request.user,
+                    user_routes=form.cleaned_data['user_routes']
+                )
+                messages.success(request, ('Udało się dodać nową drogę!'))
+                return redirect('test')
             else:
-                form = AddUserRouteForm()
+                messages.success(request, ('Nie udało się dodać nowej drogi!'))
+                return redirect('test')
         else:
-            if request.POST:
-                form = UserGroupForm(request.POST)
-                if form.is_valid():
-                    u = User_Group.objects.create(
-                        user_name=request.user,
-                        edition=current_edition_value,
-                        user_group=form.cleaned_data['user_group']
-                        )
-                    messages.success(request, ('Udało się aktualizować Twoją grupę!'))
-                    return redirect('test')
-                else:
-                    messages.success(request, ('Nie udało się aktualizować Twojej grupy!'))
-                    return redirect('test')
-            else:
-                form = UserGroupForm()
+            form = AddUserRouteForm()
 
         return render(request, 'test.html', {
             'form': form,
@@ -169,9 +150,16 @@ def add_user_route_view(request):
     else:
         max_user_edition_value = 0
 
-    if max_user_edition_value == current_edition_value:
+    if not User_Group.objects.filter(edition=int(current_edition_value)).filter(user_name=request.user).exists():
+        return redirect('sign_up_new_edition')
+    else:
+
+        current_usergroup_filter = User_Group.objects.filter(edition=int(current_edition_value)).filter(user_name=request.user)
+        current_usergroup = list(current_usergroup_filter)
+        current_usergroup_value = current_usergroup[0]
+
         if request.POST:
-            form = AddUserRouteForm(request.POST)
+            form = AddUserRouteForm(request.POST, )
             if form.is_valid():
                 u = User_routes.objects.create(
                     user_name=request.user,
@@ -184,29 +172,13 @@ def add_user_route_view(request):
                 return redirect('add_user_route')
         else:
             form = AddUserRouteForm()
-    else:
-        if request.POST:
-            form = UserGroupForm(request.POST)
-            if form.is_valid():
-                u = User_Group.objects.create(
-                    user_name=request.user,
-                    edition=current_edition_value,
-                    user_group=form.cleaned_data['user_group']
-                    )
-                messages.success(request, ('Udało się aktualizować Twoją grupę!'))
-                return redirect('add_user_route')
-            else:
-                messages.success(request, ('Nie udało się aktualizować Twojej grupy!'))
-                return redirect('add_user_route')
-        else:
-            form = UserGroupForm()
 
-    return render(request, 'add_user_route.html', {
-        'form': form,
-        'current_edition_value': current_edition_value,
-        'max_user_edition_value': max_user_edition_value,
-    })
-
+        return render(request, 'add_user_route.html', {
+            'form': form,
+            'current_edition_value': current_edition_value,
+            'max_user_edition_value': max_user_edition_value,
+            'current_usergroup_value': str(current_usergroup_value),
+        })
 
 # -----------------------------------------------------------------------------------------
 
