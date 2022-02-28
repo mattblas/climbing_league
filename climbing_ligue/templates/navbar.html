@@ -1,4 +1,4 @@
-<nav class="navbar navbar-light bg-light fixed-top">
+<nav class="navbar navbar navbar-dark fixed-top" style="background-color: #292929;">
     <div class="container-fluid">
         <a class="navbar-brand mx-auto" href="{% url 'home' %}" ></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
@@ -17,7 +17,7 @@
     {% comment %} TEST LINK {% endcomment %}
 
                 <li class="nav-item">
-                <a class="nav-link" href="{% url 'test' %}">Test</a>
+                <a class="nav-link text-dark"" href="{% url 'test' %}">Test</a>
                 </li>
 
 
@@ -26,11 +26,11 @@
                 {% if not request.user.is_authenticated%}
 
                     <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    <a class="nav-link text-dark" href="{% url 'login' %}">Login</a>
                     </li>
 
                     <li class="nav-item">
-                    <a class="nav-link" href="{% url 'register' %}">Rejestracja</a>
+                    <a class="nav-link text-dark" href="{% url 'register' %}">Rejestracja</a>
                     </li>
 
                 {% endif %}
@@ -41,15 +41,15 @@
                 {% if request.user.is_authenticated %}
 
                     <li class="nav-item">
-                    <a class="nav-link" href="{% url 'user_home' %}">Twój Profil</a>
+                    <a class="nav-link text-dark" href="{% url 'user_home' %}">Twój Profil</a>
                     </li>
                     
                     <li class="nav-item">
-                    <a class="nav-link" href="{% url 'add_user_route' %}">Dodaj nową drogę</a>
+                    <a class="nav-link text-dark" href="{% url 'add_user_route' %}">Dodaj nową drogę</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Wyloguj się</a>
+                        <a class="nav-link text-dark" href="{% url 'logout' %}">Wyloguj się</a>
                     </li>
 
                 {% endif %}
@@ -60,23 +60,23 @@
 
                     <hr>
                     <span class="navbar-text">
-                        strefa ROUTESETTERA
+                        <a class="nav-link text-dark">strefa ROUTESETTERA</a>
                     </span>
 
                     <li class="nav-item">
-                    <a class="nav-link" href="{% url 'add_route' %}">Dodaj drogę</a>
+                    <a class="nav-link text-dark" href="{% url 'add_route' %}">Dodaj drogę</a>
                     </li>
 
                     <li class="nav-item">
-                    <a class="nav-link" href="{% url 'add_new_edition' %}">Dodaj Edycję</a>
+                    <a class="nav-link text-dark" href="{% url 'add_new_edition' %}">Dodaj Edycję</a>
                     </li>
 
                     <li class="nav-item">
-                    <a class="nav-link" href="{% url 'update_edition' %}">Aktualizuj Edycję</a>
+                    <a class="nav-link text-dark" href="{% url 'update_edition' %}">Aktualizuj Edycję</a>
                     </li>
 
                     <li class="nav-item">
-                    <a class="nav-link" href="{% url 'update_round' %}">Aktualizuj Rundę</a>
+                    <a class="nav-link text-dark" href="{% url 'update_round' %}">Aktualizuj Rundę</a>
                     </li>
 
                 {% endif %}

@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from climbing_ligue.views import (
     home,
     add_route_view,
@@ -49,3 +49,4 @@ urlpatterns = [
     path('add_new_edition/', add_new_edition_view, name='add_new_edition'),
     path('sign_up_new_edition/', sign_up_new_edition_view, name='sign_up_new_edition'),
 ]
+urlpatterns += staticfiles_urlpatterns()
