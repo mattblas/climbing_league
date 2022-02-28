@@ -14,20 +14,7 @@ Grupa użytkownika: {{ current_usergroup_value }}
 
 <form method="POST" class="post-form">{% csrf_token %}
 
-  <p>{% render_field form.user_group class="form-select" %}</p>
-  {% if current_usergroup_value == 'Początkujący' %}
-  <p>{% render_field form.user_routes_001 class="form-select" %}</p>
-  {% else %}
-      {% if current_usergroup_value == 'Średniozaawansowani'%}
-      <p >{% render_field form.user_routes_002 class="form-select" %}</p>
-      {% else %}
-          {% if current_usergroup_value == 'Pro'%}
-          <p>{% render_field form.user_routes_003 class="form-select" %}</p>
-          {% else %}
-              <p>{% render_field form.user_routes_004 class="form-select" %}</p>
-              {% endif %}
-          {% endif %}
-      {% endif %}
+  <p>{% render_field form.user_routes class="form-select" %}</p>
 
   <p align="right"><button type="submit" class="btn btn-secondary">Dodaj</button></p>
 </form>

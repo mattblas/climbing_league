@@ -142,3 +142,40 @@ class AddRouteForm(ModelForm):
     class Meta:
         model = Route
         fields = ('route_name', 'route_grade', 'points', 'edition', 'round', 'route_group')
+
+
+class AddUserRouteForm001(ModelForm):
+    user_routes = forms.ModelChoiceField(queryset=Route.objects.all().filter(edition=get_current_edition()).filter(round=get_current_round()).filter(route_group='Początkujący'))
+
+    class Meta:
+        model = User_routes
+        fields = ['user_routes']
+
+
+class AddUserRouteForm002(ModelForm):
+    user_routes = forms.ModelChoiceField(queryset=Route.objects.all().filter(edition=get_current_edition()).filter(
+        round=get_current_round()).filter(route_group='Średniozaawansowani'))
+
+    class Meta:
+        model = User_routes
+        fields = ['user_routes']
+
+
+class AddUserRouteForm003(ModelForm):
+    user_routes = forms.ModelChoiceField(
+        queryset=Route.objects.all().filter(edition=get_current_edition()).filter(round=get_current_round()).filter(
+            route_group='Pro'))
+
+    class Meta:
+        model = User_routes
+        fields = ['user_routes']
+
+
+class AddUserRouteForm004(ModelForm):
+    user_routes = forms.ModelChoiceField(
+        queryset=Route.objects.all().filter(edition=get_current_edition()).filter(round=get_current_round()).filter(
+            route_group='Masters'))
+
+    class Meta:
+        model = User_routes
+        fields = ['user_routes']

@@ -3,7 +3,7 @@ import operator
 from django.contrib import messages
 from django.shortcuts import render, redirect
 
-from climbing_ligue.forms import AddRouteForm, AddUserRouteForm, UserGroupForm, NewEditionForm
+from climbing_ligue.forms import AddRouteForm, AddUserRouteForm, AddUserRouteForm001, AddUserRouteForm002, AddUserRouteForm003, AddUserRouteForm004, UserGroupForm, NewEditionForm
 from climbing_ligue.models import Route, User_routes, Active_edition, User_Group, Active_round
 from members.models import Member
 from django.db.models import Max
@@ -11,8 +11,98 @@ from django.db.models import Max
 # Create your views here.
 
 def test(request):
-    return render(request, 'test.html', {
-    })
+    current_edition_filter = Active_edition.objects.filter(current_edition=True).values_list('edition', flat=True)
+    current_edition = list(current_edition_filter)
+    current_edition_value = current_edition[0]
+    usergroups = User_Group.objects.filter(user_name=request.user)
+
+    max_user_edition = usergroups.aggregate(Max('edition'))
+    max_user_edition_value = max_user_edition['edition__max']
+
+    if max_user_edition_value is not None:
+        max_user_edition_value = max_user_edition['edition__max']
+    else:
+        max_user_edition_value = 0
+
+    if not User_Group.objects.filter(edition=int(current_edition_value)).filter(user_name=request.user).exists():
+        return redirect('sign_up_new_edition')
+
+    else:
+        current_usergroup_filter = User_Group.objects.filter(edition=int(current_edition_value)).filter(
+            user_name=request.user)
+        current_usergroup = list(current_usergroup_filter)
+        current_usergroup_value = current_usergroup[0]
+
+        if str(current_usergroup_value) == 'Początkujący':
+            if request.POST:
+                form = AddUserRouteForm001(request.POST)
+                if form.is_valid():
+                    u = User_routes.objects.create(
+                        user_name=request.user,
+                        user_routes=form.cleaned_data['user_routes']
+                    )
+                    messages.success(request, ('Udało się dodać nową drogę!'))
+                    return redirect('test')
+                else:
+                    messages.success(request, ('Nie udało się dodać nowej drogi!'))
+                    return redirect('test')
+            else:
+                form = AddUserRouteForm001()
+
+        elif str(current_usergroup_value) == 'Średniozaawansowani':
+            if request.POST:
+                form = AddUserRouteForm002(request.POST)
+                if form.is_valid():
+                    u = User_routes.objects.create(
+                        user_name=request.user,
+                        user_routes=form.cleaned_data['user_routes']
+                    )
+                    messages.success(request, ('Udało się dodać nową drogę!'))
+                    return redirect('test')
+                else:
+                    messages.success(request, ('Nie udało się dodać nowej drogi!'))
+                    return redirect('test')
+            else:
+                form = AddUserRouteForm002()
+
+        elif str(current_usergroup_value) == 'Pro':
+            if request.POST:
+                form = AddUserRouteForm003(request.POST)
+                if form.is_valid():
+                    u = User_routes.objects.create(
+                        user_name=request.user,
+                        user_routes=form.cleaned_data['user_routes']
+                    )
+                    messages.success(request, ('Udało się dodać nową drogę!'))
+                    return redirect('test')
+                else:
+                    messages.success(request, ('Nie udało się dodać nowej drogi!'))
+                    return redirect('test')
+            else:
+                form = AddUserRouteForm003()
+
+        else:
+            if request.POST:
+                form = AddUserRouteForm004(request.POST)
+                if form.is_valid():
+                    u = User_routes.objects.create(
+                        user_name=request.user,
+                        user_routes=form.cleaned_data['user_routes']
+                    )
+                    messages.success(request, ('Udało się dodać nową drogę!'))
+                    return redirect('test')
+                else:
+                    messages.success(request, ('Nie udało się dodać nowej drogi!'))
+                    return redirect('test')
+            else:
+                form = AddUserRouteForm004()
+
+        return render(request, 'test.html', {
+            'form': form,
+            'current_edition_value': current_edition_value,
+            'max_user_edition_value': max_user_edition_value,
+            'current_usergroup_value': str(current_usergroup_value),
+        })
 
 def sign_up_new_edition_view(request):
 
@@ -107,24 +197,74 @@ def add_user_route_view(request):
         return redirect('sign_up_new_edition')
 
     else:
-        current_usergroup_filter = User_Group.objects.filter(edition=int(current_edition_value)).filter(user_name=request.user)
+        current_usergroup_filter = User_Group.objects.filter(edition=int(current_edition_value)).filter(
+            user_name=request.user)
         current_usergroup = list(current_usergroup_filter)
         current_usergroup_value = current_usergroup[0]
 
-        if request.POST:
-            form = AddUserRouteForm(request.POST, )
-            if form.is_valid():
-                u = User_routes.objects.create(
-                    user_name=request.user,
-                    user_routes=form.cleaned_data['user_routes']
-                )
-                messages.success(request, ('Udało się dodać nową drogę!'))
-                return redirect('add_user_route')
+        if str(current_usergroup_value) == 'Początkujący':
+            if request.POST:
+                form = AddUserRouteForm001(request.POST)
+                if form.is_valid():
+                    u = User_routes.objects.create(
+                        user_name=request.user,
+                        user_routes=form.cleaned_data['user_routes']
+                    )
+                    messages.success(request, ('Udało się dodać nową drogę!'))
+                    return redirect('add_user_route')
+                else:
+                    messages.success(request, ('Nie udało się dodać nowej drogi!'))
+                    return redirect('add_user_route')
             else:
-                messages.success(request, ('Nie udało się dodać nowej drogi!'))
-                return redirect('add_user_route')
+                form = AddUserRouteForm001()
+
+        elif str(current_usergroup_value) == 'Średniozaawansowani':
+            if request.POST:
+                form = AddUserRouteForm002(request.POST)
+                if form.is_valid():
+                    u = User_routes.objects.create(
+                        user_name=request.user,
+                        user_routes=form.cleaned_data['user_routes']
+                    )
+                    messages.success(request, ('Udało się dodać nową drogę!'))
+                    return redirect('add_user_route')
+                else:
+                    messages.success(request, ('Nie udało się dodać nowej drogi!'))
+                    return redirect('add_user_route')
+            else:
+                form = AddUserRouteForm002()
+
+        elif str(current_usergroup_value) == 'Pro':
+            if request.POST:
+                form = AddUserRouteForm003(request.POST)
+                if form.is_valid():
+                    u = User_routes.objects.create(
+                        user_name=request.user,
+                        user_routes=form.cleaned_data['user_routes']
+                    )
+                    messages.success(request, ('Udało się dodać nową drogę!'))
+                    return redirect('add_user_route')
+                else:
+                    messages.success(request, ('Nie udało się dodać nowej drogi!'))
+                    return redirect('add_user_route')
+            else:
+                form = AddUserRouteForm003()
+
         else:
-            form = AddUserRouteForm()
+            if request.POST:
+                form = AddUserRouteForm004(request.POST)
+                if form.is_valid():
+                    u = User_routes.objects.create(
+                        user_name=request.user,
+                        user_routes=form.cleaned_data['user_routes']
+                    )
+                    messages.success(request, ('Udało się dodać nową drogę!'))
+                    return redirect('add_user_route')
+                else:
+                    messages.success(request, ('Nie udało się dodać nowej drogi!'))
+                    return redirect('add_user_route')
+            else:
+                form = AddUserRouteForm004()
 
         return render(request, 'add_user_route.html', {
             'form': form,
@@ -132,9 +272,6 @@ def add_user_route_view(request):
             'max_user_edition_value': max_user_edition_value,
             'current_usergroup_value': str(current_usergroup_value),
         })
-
-# -----------------------------------------------------------------------------------------
-
 
 def update_edition_view(request):
     edition_list = Active_edition.objects.all()
