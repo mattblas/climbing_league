@@ -5,7 +5,7 @@
 {% if request.user.is_staff %}
 
 <div class="p-3 mb-2 text-warning">
-<h1>Dodaj Drogę</h1>
+<h1>Dodaj Boulder</h1>
 </div>
 <br><br>
 
@@ -17,11 +17,11 @@
         <input class="form-control" 
         name="route_name" 
         type="text" 
-        placeholder="Nazwa drogi" aria-label="default input example">
+        placeholder="Nazwa bouldera" aria-label="default input example">
     </div>
 
     <div class="mb-3">
-        <label for="exampleInput" class="form-label">Wycena</label>
+        <label class="form-label">Wycena</label>
             <select class="form-select" 
             placeholder="Wycena" 
             name="route_grade" 
@@ -53,7 +53,7 @@
     </div>
 
     <div class="mb-3">
-        <label for="exampleInput" class="form-label">Punktacja</label>
+        <label class="form-label">Punktacja</label>
             <select class="form-select"
             placeholder="Default input" 
             name="points" 
@@ -81,7 +81,7 @@
     </div>
 
     <div class="mb-3">
-        <label for="exampleInput" class="form-label">Edycja</label>
+        <label class="form-label">Edycja</label>
             <input class="form-control" 
             name="edition"
             type="number" min="1"
@@ -89,7 +89,7 @@
     </div>
 
     <div class="mb-3">
-        <label for="exampleInput" class="form-label">Runda</label>
+        <label class="form-label">Runda</label>
             <select class="form-select" 
             name="round" 
             placeholder="Runda"
@@ -103,7 +103,7 @@
     </div>
 
     <div class="mb-3">
-        <label for="exampleInput" class="form-label">Grupa</label>
+        <label class="form-label">Grupa</label>
             <select class="form-select" name="route_group" aria-label="Default select example">
                 <option value="Początkujący">Początkujący</option>
                 <option value="Średniozaawansowani">Średniozaawansowani</option>
@@ -112,44 +112,19 @@
             </select>
     </div>
 
-    <input type="submit" value="Wyślij" class="btn btn-secondary btn-sm" >
+    <p align="right"><input type="submit" value="Dodaj" class="btn btn-secondary" ></p>
 
 </form>
-<!--OLD FORM-->
-
-{% comment %} <form method="POST">
-    
-    {% csrf_token %}
-
-    {% for field in add_route_form %}
-        <p>
-            {{ field.label_tag }}<br>
-            {{ field }}
-
-            {% if field.help_text %}
-                {{ field.help_text }}
-            {% endif %}
-
-            {% for error in field.errors %}
-                {{ error }}
-            {% endfor %}
-        </p>
-    {% endfor %}
-
-    <input type="submit" value="Wyślij" class="btn btn-secondary btn-sm" >
-</form> {% endcomment %}
-
-<!--END OF OLD FORM -->
 
 <hr>
-<h3>Lista Dróg<h3>
+<h3>Lista Dróg</h3>
     <div class="table-responsive"> 
     <table class="table table-striped">
         <thead>
         
           <tr>
             <th scope="col"><h5>id</h5></th>
-            <th scope="col"><h5>Nazwa drogi</h5></th>
+            <th scope="col"><h5>Nazwa bouldera</h5></th>
             <th scope="col"><h5>Trudność</h5></th>
             <th scope="col"><h5>Punktacja</h5></th>
             <th scope="col"><h5>Edycja</h5></th>

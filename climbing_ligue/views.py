@@ -122,13 +122,13 @@ def add_user_route_view(request):
                             user_name=request.user,
                             user_routes=form.cleaned_data['user_routes']
                         )
-                        messages.success(request, ('Udało się dodać nową drogę!'))
+                        messages.success(request, ('Udało się dodać nowy boulder!'))
                         return redirect('add_user_route')
                     else:
-                        messages.success(request, ('Masz już pokonaną tę drogę.'))
+                        messages.success(request, ('Masz już pokonany ten boulder.'))
                         return redirect('add_user_route')
                 else:
-                    messages.success(request, ('Nie udało się dodać nowej drogi!'))
+                    messages.success(request, ('Nie udało się dodać nowego bouldera.!'))
                     return redirect('add_user_route')
             else:
                 form = AddUserRouteForm001()
@@ -143,13 +143,13 @@ def add_user_route_view(request):
                             user_name=request.user,
                             user_routes=form.cleaned_data['user_routes']
                         )
-                        messages.success(request, ('Udało się dodać nową drogę!'))
+                        messages.success(request, ('Udało się dodać nowy boulder!'))
                         return redirect('add_user_route')
                     else:
-                        messages.success(request, ('Masz już pokonaną tę drogę.'))
+                        messages.success(request, ('Masz już pokonany ten boulder.'))
                         return redirect('add_user_route')
                 else:
-                    messages.success(request, ('Nie udało się dodać nowej drogi!'))
+                    messages.success(request, ('Nie udało się dodać nowego bouldera!'))
                     return redirect('add_user_route')
             else:
                 form = AddUserRouteForm002()
@@ -164,13 +164,13 @@ def add_user_route_view(request):
                             user_name=request.user,
                             user_routes=form.cleaned_data['user_routes']
                         )
-                        messages.success(request, ('Udało się dodać nową drogę!'))
+                        messages.success(request, ('Udało się dodać nowy boulder!'))
                         return redirect('add_user_route')
                     else:
-                        messages.success(request, ('Masz już pokonaną tę drogę.'))
+                        messages.success(request, ('Masz już pokonany ten boulder.'))
                         return redirect('add_user_route')
                 else:
-                    messages.success(request, ('Nie udało się dodać nowej drogi!'))
+                    messages.success(request, ('Nie udało się dodać nowego bouldera!'))
                     return redirect('add_user_route')
             else:
                 form = AddUserRouteForm003()
@@ -185,13 +185,13 @@ def add_user_route_view(request):
                             user_name=request.user,
                             user_routes=form.cleaned_data['user_routes']
                         )
-                        messages.success(request, ('Udało się dodać nową drogę!'))
+                        messages.success(request, ('Udało się dodać nowy boulder!'))
                         return redirect('add_user_route')
                     else:
-                        messages.success(request, ('Masz już pokonaną tę drogę.'))
+                        messages.success(request, ('Masz już pokonany ten boulder.'))
                         return redirect('add_user_route')
                 else:
-                    messages.success(request, ('Nie udało się dodać nowej drogi!'))
+                    messages.success(request, ('Nie udało się dodać nowego bouldera!'))
                     return redirect('add_user_route')
             else:
                 form = AddUserRouteForm004()
@@ -238,10 +238,10 @@ def add_route_view(request):
         form = AddRouteForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, ('Udało się dodać nową drogę!'))
+            messages.success(request, ('Udało się dodać nowy boulder!'))
             return redirect('add_route')
         else:
-            messages.success(request, ('Nie udało się dodać nowej drogi!'))
+            messages.success(request, ('Nie udało się dodać nowego bouldera!'))
             return redirect('add_route')
     else:
         form = AddRouteForm()

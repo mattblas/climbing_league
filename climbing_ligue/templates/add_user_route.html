@@ -3,14 +3,14 @@
 {% load widget_tweaks %}
 {% block content %}
 <div class="p-3 mb-2 text-warning">
-<h1>Dodaj nową drogę</h1>
+<h1>Dodaj nowy boulder</h1>
 </div>
 Aktualna Edycja: {{current_edition_value}}<br>
 Max User Edition Value: {{max_user_edition_value}}<br>
 Grupa użytkownika: {{ current_usergroup_value }}
 
 <br><br><br>
-  Wybierz drogę do dodania.<br><br><br>
+  Wybierz boulder do dodania.<br><br><br>
 
 <form method="POST" class="post-form">{% csrf_token %}
 
