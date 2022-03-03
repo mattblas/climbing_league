@@ -11,8 +11,23 @@ from django.db.models import Max
 # Create your views here.
 
 def test(request):
-        return render(request, 'test.html', {
-        })
+    # GET ACTIVE USER
+    username = request.user
+    # GET ACTIVE EDITION
+    all_users = Member.objects.all()  # MOŻNA DODAĆ WARUNKOWANIE 'GENDER'
+    user_group = User_Group.objects.all()
+    current_edition_filter = Active_edition.objects.filter(current_edition=True).values_list('edition', flat=True)
+    current_edition = list(current_edition_filter)
+    # CHECK IF EDITION IS ACTIVE
+    if current_edition:
+        current_edition_value = current_edition[0]
+    else:
+        current_edition_value = 0
+
+
+    return render(request, 'test.html', {
+        'username': username,
+    })
 
 def sign_up_new_edition_view(request):
 
@@ -293,10 +308,13 @@ def home(request):
         # variable referenced before assignment BUG FIX
         usergroup_value = 'N/A'
         usergender_value = 'N/A'
+        Xuser_group = None
         # GET USER GROUP
         usergroup_filter = User_Group.objects.filter(user_name=username, edition=current_edition_value)
+
         for x in usergroup_filter:
             usergroup_value = x.user_group
+            Xuser_group = x.user_group
         # GET USER GENDER
         usergender_filter = Member.objects.filter(username=username)
         for x in usergender_filter:
@@ -315,7 +333,8 @@ def home(request):
                 points = route.user_routes.points
                 current_points = i + points
                 i = current_points
-            points_dict[user] = i
+            if i > 0:
+                points_dict[user] = i
         sorted_points = sorted(points_dict.items(), key=operator.itemgetter(1), reverse=True)
 
 # KATEGORIA OPEN
@@ -338,4 +357,5 @@ def home(request):
             'usergender_value': usergender_value,
             'sorted_points': sorted_points,
             'open_sorted_points': open_sorted_points,
+            'Xuser_group': Xuser_group,
         })
