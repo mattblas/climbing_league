@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="p-3 mb-2 text-warning">
-<h1>Cześć, {{ request.user.username|title }}</h1>
-</div>
+<!--<div class="p-3 mb-2 text-warning">-->
+<!--<h1>Cześć, {{ request.user.username|title }}</h1>-->
+<!--</div>-->
+<!--<br><br>-->
+<br>
+<h1 class="display-6" align="right">Cześć, {{ request.user.username|title }}</h1>
 <br><br>
 
 Aktualna edycja zawodów: {{ current_edition_value }}<hr>

@@ -2,11 +2,13 @@
 
 {% load widget_tweaks %}
 {% block content %}
-<div class="p-3 mb-2 text-warning">
-<h1>Test Site</h1>
-</div>
+<!--<div class="p-3 mb-2 text-warning">-->
+<!--<h1>Test Site</h1>-->
+<!--</div>-->
+<!--<br><br>-->
+<br>
+<h1 class="display-6" align="right">Test</h1>
 <br><br>
-
 <!--SEKCJA DLA ZALOGOWANYCH-->
 {% if request.user.is_authenticated %}
     <h1 class="display-6" align="right">Cześć, {{ username|title }}</h1>
