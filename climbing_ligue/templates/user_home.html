@@ -9,13 +9,16 @@
 <h1 class="display-6" align="right">Cześć, {{ request.user.username|title }}</h1>
 <br><br>
 
-Aktualna edycja zawodów: {{ current_edition_value }}<hr>
-Aktualne punkty: {{ current_points }}<hr><br>
-
+    <blockquote class="blockquote" align="right">
+        <p>Twoje punkty: {{ current_points }} </p>
+    </blockquote>
+<br><br>
 {% comment %} LISTA DRÓG UŻYTKOWNIKA W NAJNOWSZEJ EDYCJI {% endcomment %}
 
-Lista dróg użytkownika w bieżącej edycji:<br>
-
+    <blockquote class="blockquote" align="center">
+        <p>Bouldery pokonane w {{ current_edition_value }} edycji.</p>
+    </blockquote>
+<hr>
 <table table class="table table-striped">
   <thead>
     <tr>
@@ -30,7 +33,7 @@ Lista dróg użytkownika w bieżącej edycji:<br>
     {% for route in filter %}
       {% if route.user_routes.edition == current_edition_value %}  
         <tr>
-          <td>{{ route.user_routes }}</td>
+          <td style="width: 60%;">{{ route.user_routes }}</td>
           <td>{{ route.user_routes.edition }}</td>
           <td>{{ route.user_routes.round }}</td>
           <td>{{ route.user_routes.route_grade }}</td>
@@ -40,14 +43,15 @@ Lista dróg użytkownika w bieżącej edycji:<br>
     {% endfor %}
   </tbody>
 </table>
-
-<hr><br><br><br>
-
-
+        <p align="right"><a href="/add_user_route"><button type="submit" class="btn btn-secondary">Dodaj nowy boulder</button></a></p>
+<br><br>
 
 {% comment %} LISTA WSZYSTKICH DRÓG UŻYTKOWNIKA{% endcomment %}
+    <blockquote class="blockquote" align="left">
+        <p>Lista wszystkich Twoich boulderów:</p>
+    </blockquote>
+<hr>
 
-Lista wszystkich dróg użytkownika:<br>
 
 <table table class="table table-striped">
     <thead>
@@ -62,7 +66,7 @@ Lista wszystkich dróg użytkownika:<br>
     <tbody>
       {% for route in filter %}
       <tr>
-            <td>{{ route.user_routes }}</td>
+            <td style="width: 60%;">{{ route.user_routes }}</td>
             <td>{{ route.user_routes.edition }}</td>
             <td>{{ route.user_routes.round }}</td>
             <td>{{ route.user_routes.route_grade }}</td>
