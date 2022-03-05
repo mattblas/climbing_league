@@ -359,3 +359,7 @@ def home(request):
             'open_sorted_points': open_sorted_points,
             'Xuser_group': Xuser_group,
         })
+
+def statute_view(request):
+    return render(request, 'statute.html', {
+    })
