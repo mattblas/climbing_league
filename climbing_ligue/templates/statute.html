@@ -99,6 +99,9 @@ Masters - 7C+ i trudniej<br><br></p>
     uczestnik otrzymuje kartę wyników, którą do ostatniego dnia rundy oddaje na recepcję. <br>
 Wyniki poszczególnych rund będą publikowane na FB (zgoda RODO przy pobraniu karty startowej) i na tabeli wyników na Limbo.</p>
 <br></h3>
+{% if request.user.is_anonymous %}
 <a class="nav-link" align="right" href="{% url 'register' %}">Rejestracja</a>
+<a class="nav-link" align="right" href="{% url 'login' %}">Login</a>
+{% endif %}
 <br>
 {% endblock %}

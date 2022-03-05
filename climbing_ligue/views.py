@@ -363,3 +363,8 @@ def home(request):
 def statute_view(request):
     return render(request, 'statute.html', {
     })
+
+def results_view(request):
+    return render(request, 'results.html', {
+
+    })
