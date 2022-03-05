@@ -9,15 +9,11 @@
 <h1 class="display-6" align="right">Cześć, {{ request.user.username|title }}</h1>
 <br><br>
 
-    <blockquote class="blockquote" align="right">
-        <p>Twoje punkty: {{ current_points }} </p>
-    </blockquote>
+<h3 class="display-6" style="font-size: 150%" align="right">Twoje punkty: {{ current_points }}</h3>
 <br><br>
 {% comment %} LISTA DRÓG UŻYTKOWNIKA W NAJNOWSZEJ EDYCJI {% endcomment %}
+<h3 class="display-6" style="font-size: 100%" align="center">Bouldery pokonane w {{ current_edition_value }} edycji.</h3>
 
-    <blockquote class="blockquote" align="center">
-        <p>Bouldery pokonane w {{ current_edition_value }} edycji.</p>
-    </blockquote>
 <hr>
 <table table class="table table-striped">
   <thead>
@@ -47,9 +43,8 @@
 <br><br>
 
 {% comment %} LISTA WSZYSTKICH DRÓG UŻYTKOWNIKA{% endcomment %}
-    <blockquote class="blockquote" align="left">
-        <p>Lista wszystkich Twoich boulderów:</p>
-    </blockquote>
+    <h1 class="display-6" style="font-size: 100%" align="center">Lista wszystkich Twoich boulderów:</h1>
+
 <hr>
 
 

@@ -9,12 +9,10 @@
 <h1 class="display-6" align="right">Dodaj nowy boulder</h1>
 <br><br>
 
-Aktualna Edycja: {{current_edition_value}}<br>
-Max User Edition Value: {{max_user_edition_value}}<br>
-Grupa użytkownika: {{ current_usergroup_value }}
+<h3 class="display-6" style="font-size: 100%" align="center">Grupa w której rywalizujesz to: {{ current_usergroup_value }}</h3>
 
-<br><br><br>
-  Wybierz boulder do dodania.<br><br><br>
+<br><br>
+<h3 class="display-6" style="font-size: 100%" align="center">Wybierz boulder do dodania.</h3><br>
 
 <form method="POST" class="post-form">{% csrf_token %}
 

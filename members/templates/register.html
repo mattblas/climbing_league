@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="p-3 mb-2 text-warning">
-<h1>Rejestracja</h1>
+<h1 class="display-6" align="center">Rejestracja</h1>
 </div>
 <br><br>
 
@@ -53,34 +53,7 @@
 <input type="submit" value="Wyślij" class="btn btn-secondary btn-sm">
 
 </form>
-
-
-
-<!--OLD FORM-->
-
-{% comment %} <form method="POST">
-    
-    {% csrf_token %}
-
-    {% for field in registration_form %}
-        <p>
-
-            {{ field.label_tag }}<br>
-            {{ field }}
-
-            {% if field.help_text %}
-                {{ field.help_text }}
-            {% endif %}
-
-            {% for error in field.errors %}
-                {{ error }}
-            {% endfor %}
-        </p>
-    {% endfor %}
-
-    <input type="submit" value="Wyślij" class="btn btn-secondary btn-sm" >
-    
-</form> {% endcomment %}
+<br>
 
 
 {% endblock %}
