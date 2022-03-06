@@ -22,7 +22,7 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Użytkownik</th>
+                <th scope="col" style="width:60%">Użytkownik</th>
                 <th scope="col">Kategoria</th>
                 <th scope="col">Wynik</th>
             </tr>
@@ -33,14 +33,14 @@
             {% if k == username %}
             <tr style="background-color: lightgrey;">
                 <td>{{ forloop.counter }}</td>
-                <td>{{ k }}</td>
+                <td style="width:60%">{{ k }}</td>
                 <td>{{ usergroup_value }}</td>
                 <td>{{ v }}</td>
             </tr>
             {% else %}
             <tr>
                 <td>{{ forloop.counter }}</td>
-                <td>{{ k }}</td>
+                <td style="width:60%">{{ k }}</td>
                 <td>{% for user in user_group %}
                         {% if user.user_name == k %}
                             {% if user.edition == current_edition_value %}
@@ -67,7 +67,7 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Użytkownik</th>
+                <th scope="col" style="width:60%">Użytkownik</th>
                 <th scope="col">Kategoria</th>
                 <th scope="col">Wynik</th>
             </tr>
@@ -78,7 +78,7 @@
                 {% if k == username %}
                 <tr style="background-color: lightgrey;">
                     <td>{{ forloop.counter }}</td>
-                    <td>{{ k }}</td>
+                    <td style="width:60%">{{ k }}</td>
                     <td>{% for user in user_group %}
                             {% if user.user_name == k %}
                                 {% if user.edition == current_edition_value %}
@@ -92,7 +92,7 @@
                 {% else %}
                 <tr >
                     <td>{{ forloop.counter }}</td>
-                    <td>{{ k }}</td>
+                    <td style="width:60%">{{ k }}</td>
                     <td>{% for user in user_group %}
                             {% if user.user_name == k %}
                                 {% if user.edition == current_edition_value %}
@@ -119,7 +119,7 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Użytkownik</th>
+                <th scope="col" style="width:60%">Użytkownik</th>
                 <th scope="col">Kategoria</th>
                 <th scope="col">Wynik</th>
             </tr>
@@ -130,7 +130,7 @@
                 {% if k == username %}
                 <tr style="background-color: lightgrey;">
                     <td>{{ forloop.counter }}</td>
-                    <td>{{ k }}</td>
+                    <td style="width:60%">{{ k }}</td>
                     <td>{% for user in user_group %}
                             {% if user.user_name == k %}
                                 {% if user.edition == current_edition_value %}
@@ -144,7 +144,7 @@
                 {% else %}
                 <tr >
                     <td>{{ forloop.counter }}</td>
-                    <td>{{ k }}</td>
+                    <td style="width:60%">{{ k }}</td>
                     <td>{% for user in user_group %}
                             {% if user.user_name == k %}
                                 {% if user.edition == current_edition_value %}
@@ -171,21 +171,18 @@
         <a class="nav-link" align="right" href="{% url 'login' %}">Login</a><p>
         <a class="nav-link" align="right" href="{% url 'register' %}">Rejestracja</a>
 
-    <br><br><br>
+    <br>
 <h1 class="display-6" align="center">- TABELA WYNIKÓW - </h1>
 
-    <figure>
-        <blockquote class="blockquote" align="right">
             <h3 class="display-6" style="font-size: 100%" align="center">Kategoria Open - </h3>
-        </blockquote>
-    </figure>
+<br>
 
     <table class="table table-striped table-hover table-bordered">
 
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Użytkownik</th>
+                    <th scope="col" style="width:60%">Użytkownik</th>
                     <th scope="col">Kategoria</th>
                     <th scope="col">Wynik</th>
                 </tr>
@@ -195,7 +192,7 @@
                 {% for k, v in open_sorted_points %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
-                    <td>{{ k }}</td>
+                    <td style="width:60%">{{ k }}</td>
                     <td>
                         {% for user in user_group %}
                             {% if user.user_name == k %}

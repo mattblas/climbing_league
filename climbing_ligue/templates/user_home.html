@@ -15,25 +15,25 @@
 <h3 class="display-6" style="font-size: 100%" align="center">Bouldery pokonane w {{ current_edition_value }} edycji.</h3>
 
 <hr>
-<table table class="table table-striped">
+<table table class="table table-striped" ">
   <thead>
     <tr>
-      <th scope="col">Nazwa</th>
-      <th scope="col">Edycja</th>
+      <th scope="col" style="width:60%">Nazwa</th>
+<!--      <th scope="col">Edycja</th>-->
       <th scope="col">Runda</th>
       <th scope="col">Trudność</th>
-      <th scope="col">Punktacja</th>
+<!--      <th scope="col">Punktacja</th>-->
     </tr>
   </thead>
   <tbody>
     {% for route in filter %}
       {% if route.user_routes.edition == current_edition_value %}  
         <tr>
-          <td style="width: 60%;">{{ route.user_routes }}</td>
-          <td>{{ route.user_routes.edition }}</td>
+          <td>{{ route.user_routes }}</td>
+<!--          <td>{{ route.user_routes.edition }}</td>-->
           <td>{{ route.user_routes.round }}</td>
           <td>{{ route.user_routes.route_grade }}</td>
-          <td>{{ route.user_routes.points }}</td>
+<!--          <td>{{ route.user_routes.points }}</td>-->
         </tr>
       {% endif %}
     {% endfor %}
@@ -51,21 +51,21 @@
 <table table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col">Nazwa</th>
+        <th scope="col" style="width:60%">Nazwa</th>
         <th scope="col">Edycja</th>
-        <th scope="col">Runda</th>
+<!--        <th scope="col">Runda</th>-->
         <th scope="col">Trudność</th>
-        <th scope="col">Punktacja</th>
+<!--        <th scope="col">Punktacja</th>-->
     </tr>
     </thead>
     <tbody>
       {% for route in filter %}
       <tr>
-            <td style="width: 60%;">{{ route.user_routes }}</td>
+            <td>{{ route.user_routes }}</td>
             <td>{{ route.user_routes.edition }}</td>
-            <td>{{ route.user_routes.round }}</td>
+<!--            <td>{{ route.user_routes.round }}</td>-->
             <td>{{ route.user_routes.route_grade }}</td>
-            <td>{{ route.user_routes.points }}</td>
+<!--            <td>{{ route.user_routes.points }}</td>-->
       </tr>
       {% endfor %}
     </tbody>
