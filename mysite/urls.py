@@ -28,12 +28,16 @@ from climbing_ligue.views import (
     sign_up_new_edition_view,
     statute_view,
     results_view,
+
     )
 
-from members.views import(
+from members.views import (
     registration_view,
     logout_view,
     login_view,
+    CustomUserUpdateView,
+    CustomUserDeleteView,
+    delete_succes,
 )
 
 urlpatterns = [
@@ -52,5 +56,7 @@ urlpatterns = [
     path('sign_up_new_edition/', sign_up_new_edition_view, name='sign_up_new_edition'),
     path('statute/', statute_view, name='statute'),
     path('results/', results_view, name='results'),
+    path('delete_succes/', delete_succes, name='delete_succes'),
+    path('<int:pk>/delete/', CustomUserDeleteView.as_view(template_name='delete.html'), name='delete'),
 ]
 urlpatterns += staticfiles_urlpatterns()

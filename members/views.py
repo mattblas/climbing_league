@@ -1,9 +1,19 @@
+from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from members.forms import RegistrationForm, MemberAutenticationForm
+from members.forms import RegistrationForm, MemberAutenticationForm, CustomUserUpdateForm
+from django.views.generic.edit import UpdateView, DeleteView
+from members.models import Member
 from django.contrib import messages
 
 # Create your views here.
+
+class CustomUserDeleteView(DeleteView):
+    model = Member
+    success_url = reverse_lazy('delete_succes')
+
+def delete_succes(request):
+    return render(request, 'delete_succes.html', {})
 
 def login_view(request):
     context = {}

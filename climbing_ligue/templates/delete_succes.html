@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!--<div class="p-3 mb-2 text-warning">-->
+<!--<h1>Cześć, {{ request.user.username|title }}</h1>-->
+<!--</div>-->
+<!--<br><br>-->
+<br><center>
+<h1 class="display-6" >Udało się usunąć profil!</h1>
+<br><br>
+<h5 class="display-6" style="font-size: 150%;" id="offcanvasNavbarLabel"><a class="nav-link text-warning" href="{% url 'home' %}">Strona Główna</a></h5>
+<br>
+
+{% endblock %}

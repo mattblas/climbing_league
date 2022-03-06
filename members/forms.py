@@ -43,3 +43,8 @@ class RegistrationForm(UserCreationForm):
             'username': _('Nazwa użytkownika'),
             'tak': _('Akceptuję Regulamin')
         }
+
+class CustomUserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Member
+        fields = ('username', 'gender')

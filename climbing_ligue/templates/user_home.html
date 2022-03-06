@@ -70,6 +70,9 @@
       {% endfor %}
     </tbody>
   </table>
+<br><br>
+
+<a href="{% url 'delete' request.user.pk %}" class="btn btn-outline-primary">Usuń konto</a>
 <br><br><br>
 
 {% endblock %}

@@ -7,7 +7,6 @@
 </div>
 <br><br>
 
-<!--NEW FORM-->
 <form name="RegistrationForm" method="POST">
     {% csrf_token %}
     
@@ -41,7 +40,7 @@
     </div>
 
 
-    <a class="nav-link" align="right" href="{% url 'statute' %}">Regulamin</a>
+    <p class="nav-link" align="right"><a href="{% url 'statute' %}">Regulamin</a></p>
     <div class="form-check">
         <input class="form-check-input" name="consent" type="checkbox" value="" id="flexCheckDefault" required>
         <label class="form-check-label" for="flexCheckDefault">

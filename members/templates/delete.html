@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="p-3 mb-2 text-warning">
+<h1 class="display-6" align="center">Usuń konto</h1>
+</div>
+<br><br>
+
+<form method="POST">
+    {% csrf_token %}
+    <p>Czy na pewno chcesz usunąć konto? {{ object.email }}</p>
+    <button type="submit" class="btn btn-danger">Usuń</button>
+</form>
+
+<br>
+<p>Nie, zachowaj moje konto</p>
+<a href="/" class="btn btn-outline-primary">Powrót</a>
+
+{% endblock %}
