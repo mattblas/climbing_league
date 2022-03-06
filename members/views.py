@@ -1,8 +1,8 @@
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from members.forms import RegistrationForm, MemberAutenticationForm, CustomUserUpdateForm
-from django.views.generic.edit import UpdateView, DeleteView
+from members.forms import RegistrationForm, MemberAutenticationForm
+from django.views.generic.edit import DeleteView
 from members.models import Member
 from django.contrib import messages
 

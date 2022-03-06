@@ -35,7 +35,6 @@ from members.views import (
     registration_view,
     logout_view,
     login_view,
-    CustomUserUpdateView,
     CustomUserDeleteView,
     delete_succes,
 )
