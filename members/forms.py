@@ -25,7 +25,6 @@ class MemberAutenticationForm(forms.ModelForm):
             raise forms.ValidationError('Niepoprawne hasło lub email.')
 
 
-
 class RegistrationForm(UserCreationForm):
     gender_choices = (
         ('M', 'Mężczyzna'), 
@@ -44,7 +43,18 @@ class RegistrationForm(UserCreationForm):
             'tak': _('Akceptuję Regulamin')
         }
 
-class CustomUserUpdateForm(forms.ModelForm):
+class UpdateUserForm(forms.ModelForm):
+    gender_choices = (
+        ('M', 'Mężczyzna'),
+        ('K', 'Kobieta'),
+    )
+    username = forms.CharField(max_length=100,
+                               required=True,
+                               widget=forms.TextInput(attrs={'class': 'form-control'}))
+    email = forms.EmailField(required=True,
+                             widget=forms.TextInput(attrs={'class': 'form-control'}))
+    gender = forms.ChoiceField(choices=gender_choices, label='Płeć')
+
     class Meta:
         model = Member
-        fields = ('username', 'gender')
+        fields = ['username', 'email', 'gender']

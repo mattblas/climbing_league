@@ -37,6 +37,8 @@ from members.views import (
     login_view,
     CustomUserDeleteView,
     delete_succes,
+    profile,
+    ChangePasswordView,
 )
 
 urlpatterns = [
@@ -57,5 +59,7 @@ urlpatterns = [
     path('results/', results_view, name='results'),
     path('delete_succes/', delete_succes, name='delete_succes'),
     path('<int:pk>/delete/', CustomUserDeleteView.as_view(template_name='delete.html'), name='delete'),
+    path('update/', profile, name='update'),
+    path('password-change/', ChangePasswordView.as_view(), name='password_change'),
 ]
 urlpatterns += staticfiles_urlpatterns()
